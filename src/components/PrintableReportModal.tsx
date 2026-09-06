@@ -89,27 +89,38 @@ export const PrintableReportModal: React.FC<PrintableReportModalProps> = ({
       <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl border border-slate-200/90 overflow-hidden flex flex-col max-h-[92vh] print:max-h-none print:border-none print:shadow-none print:rounded-none animate-in fade-in zoom-in-95">
         
         {/* Modal Top Actions Toolbar (Hidden in Print View) */}
-        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 print:hidden shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-sky-600/30 border border-sky-500/40 text-sky-400 flex items-center justify-center shadow-xs">
-              <Activity className="w-5 h-5" />
+        <div className="px-4 sm:px-6 py-4 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 print:hidden shrink-0">
+          <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-sky-600/30 border border-sky-500/40 text-sky-400 flex items-center justify-center shadow-xs shrink-0">
+                <Activity className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white font-sans leading-tight">
+                  Laudo Antropométrico & Relatório (PDF)
+                </h3>
+                <p className="text-[11px] text-slate-400">
+                  Visualização formatada para impressão A4 e entrega ao paciente
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-sm font-bold text-white font-sans">
-                Laudo Antropométrico & Relatório Clínico (PDF)
-              </h3>
-              <p className="text-[11px] text-slate-400">
-                Visualização formatada para impressão A4 e entrega ao paciente
-              </p>
-            </div>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="sm:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer active:scale-95 shrink-0"
+              aria-label="Fechar modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
             <button
               id="btn-imprimir-relatorio-modal"
               type="button"
               onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-900 bg-sky-400 hover:bg-sky-300 rounded-full shadow-sm transition-all cursor-pointer hover:scale-[1.02]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 min-h-[44px] text-xs font-bold text-slate-900 bg-sky-400 hover:bg-sky-300 rounded-full shadow-sm transition-all cursor-pointer active:scale-95"
               title="Abre a caixa de impressão. Escolha 'Salvar como PDF' para exportar o arquivo."
             >
               <Printer className="w-4 h-4" />
@@ -119,7 +130,7 @@ export const PrintableReportModal: React.FC<PrintableReportModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-2 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+              className="hidden sm:flex w-11 h-11 min-w-[44px] min-h-[44px] rounded-full items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer active:scale-95 shrink-0"
               aria-label="Fechar modal"
             >
               <X className="w-5 h-5" />
@@ -491,22 +502,22 @@ export const PrintableReportModal: React.FC<PrintableReportModalProps> = ({
         </div>
 
         {/* Modal Bottom Print Button Footer (Hidden in Print View) */}
-        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden shrink-0">
+        <div className="px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-200/90 flex flex-col sm:flex-row items-center justify-between gap-3 print:hidden shrink-0">
           <span className="text-xs text-slate-500 text-center sm:text-left">
             Dica: Ao abrir a janela do navegador, selecione <strong>&quot;Salvar como PDF&quot;</strong> para exportar o arquivo pronto para envio via WhatsApp ou E-mail.
           </span>
-          <div className="flex items-center gap-2.5 shrink-0">
+          <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto shrink-0 justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs text-slate-600 hover:bg-slate-200 rounded-full cursor-pointer transition-colors"
+              className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] text-xs font-semibold text-slate-600 hover:bg-slate-200 rounded-full cursor-pointer transition-colors active:scale-95 text-center flex items-center justify-center"
             >
               Fechar
             </button>
             <button
               type="button"
               onClick={handlePrint}
-              className="px-5 py-2 text-xs font-bold text-slate-900 bg-sky-400 hover:bg-sky-300 rounded-full shadow-xs transition-all cursor-pointer flex items-center gap-2"
+              className="w-full sm:w-auto px-6 py-2.5 min-h-[44px] text-xs font-bold text-slate-900 bg-sky-400 hover:bg-sky-300 rounded-full shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95"
             >
               <Printer className="w-4 h-4" />
               <span>Gerar Relatório PDF</span>

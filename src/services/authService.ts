@@ -1,18 +1,47 @@
-import { supabase } from './supabase';
+import { supabase, isSupabaseConfigured } from './supabase';
+
+const checkConfig = () => {
+  if (!isSupabaseConfigured) {
+    throw new Error('Configuração do Supabase pendente. Por favor, adicione as chaves VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY nas configurações do projeto.');
+  }
+};
 
 export const authService = {
-  async signIn(email: string) {
-    // Para simplificar no preview, usamos o fluxo de Magic Link ou OTP se configurado,
-    // mas aqui implementaremos o padrão de senha se houver.
-    // Como é um SaaS, o nutricionista geralmente faz login com email/senha.
-    const { data, error } = await supabase.auth.signInWithOtp({
+  async signUp(email: string, password: string, name: string) {
+    checkConfig();
+    const { data, error } = await supabase.auth.signUp({
       email,
+      password,
       options: {
-        emailRedirectTo: window.location.origin,
-      },
+        data: {
+          name,
+          role: 'Nutricionista'
+        }
+      }
     });
     if (error) throw error;
     return data;
+  },
+
+  async signIn(email: string, password?: string) {
+    checkConfig();
+    if (password) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      return data;
+    } else {
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: window.location.origin,
+        },
+      });
+      if (error) throw error;
+      return data;
+    }
   },
 
   async signOut() {
@@ -21,6 +50,7 @@ export const authService = {
   },
 
   async getSession() {
+    if (!isSupabaseConfigured) return null;
     const { data, error } = await supabase.auth.getSession();
     if (error) throw error;
     return data.session;

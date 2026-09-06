@@ -367,19 +367,19 @@ export const ExamRequisitionPage: React.FC = () => {
       {activeTab === 'requisition' && (
         <div className="space-y-6">
           {/* Identificação do Paciente, Conselho e Justificativas Rápidas */}
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 p-5 shadow-2xs space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-5 shadow-2xs space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-xs">
               <div>
                 <label className="block text-slate-500 dark:text-slate-400 font-bold mb-1">
                   Paciente
                 </label>
-                <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-800 dark:text-white">
+                <div className="flex items-center gap-2 min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-800 dark:text-white">
                   <User className="w-4 h-4 text-sky-500 shrink-0" />
                   <input
                     type="text"
                     value={patientName}
                     onChange={(e) => setPatientName(e.target.value)}
-                    className="bg-transparent w-full focus:outline-hidden"
+                    className="bg-transparent w-full text-base sm:text-xs focus:outline-none"
                   />
                 </div>
               </div>
@@ -391,14 +391,15 @@ export const ExamRequisitionPage: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
+                    inputMode="numeric"
                     value={patientAge}
                     onChange={(e) => setPatientAge(Number(e.target.value))}
-                    className="w-16 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-center font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                    className="w-20 min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-center font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                   <select
                     value={patientGender}
                     onChange={(e) => setPatientGender(e.target.value as 'M' | 'F')}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
                   >
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
@@ -410,7 +411,7 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-500 dark:text-slate-400 font-bold mb-1">
                   Profissional Solicitante
                 </label>
-                <div className="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-slate-700 dark:text-slate-300 font-semibold truncate">
+                <div className="min-h-[44px] flex items-center px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-slate-700 dark:text-slate-300 font-semibold truncate text-xs">
                   {user?.name || 'Dra. Vanessa Rios'} — {user?.councilInfo || 'CRN-3 14285'}
                 </div>
               </div>
@@ -419,7 +420,7 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-500 dark:text-slate-400 font-bold mb-1">
                   Janela de Jejum Obrigatória
                 </label>
-                <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 font-mono text-amber-800 dark:text-amber-300 font-bold">
+                <div className="min-h-[44px] flex items-center gap-2 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 font-mono text-amber-800 dark:text-amber-300 font-bold text-xs">
                   <Clock className="w-4 h-4 text-amber-600 shrink-0" />
                   <span>{maxFastHours > 0 ? `Jejum de ${maxFastHours} horas` : 'Sem jejum obrigatório'}</span>
                 </div>
@@ -440,7 +441,7 @@ export const ExamRequisitionPage: React.FC = () => {
                       key={tmpl.id}
                       type="button"
                       onClick={() => handleApplyJustificationTemplate(tmpl.text)}
-                      className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-sky-950 text-slate-700 dark:text-slate-300 hover:text-sky-700 dark:hover:text-sky-300 text-[10px] font-semibold transition-colors cursor-pointer border border-slate-200 dark:border-slate-700"
+                      className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-sky-950 text-slate-700 dark:text-slate-300 hover:text-sky-700 dark:hover:text-sky-300 text-[10px] font-semibold transition-colors cursor-pointer border border-slate-200 dark:border-slate-700"
                     >
                       {tmpl.label}
                     </button>
@@ -448,10 +449,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 </div>
               </div>
               <textarea
-                rows={2}
+                rows={3}
                 value={clinicalJustification}
                 onChange={(e) => setClinicalJustification(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-sans focus:outline-hidden focus:border-sky-500"
+                className="w-full p-3 text-base sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-sans focus:outline-none focus:ring-2 focus:ring-sky-500"
                 placeholder="Insira a justificativa clínica diagnóstica..."
               />
             </div>
@@ -842,14 +843,15 @@ export const ExamRequisitionPage: React.FC = () => {
             </div>
 
             {/* Inputs de Biomarcadores */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-xs">
               <div>
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">Glicemia Jejum (mg/dL)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcGlucose}
                   onChange={(e) => setCalcGlucose(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -857,9 +859,11 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">Insulina Basal (µUI/mL)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
+                  step="0.1"
                   value={calcInsulin}
                   onChange={(e) => setCalcInsulin(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -867,9 +871,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">Triglicerídeos (mg/dL)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcTg}
                   onChange={(e) => setCalcTg(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -877,9 +882,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">HDL-Colesterol (mg/dL)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcHdl}
                   onChange={(e) => setCalcHdl(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -887,9 +893,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">Colesterol Total (mg/dL)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcTotalChol}
                   onChange={(e) => setCalcTotalChol(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -897,9 +904,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">LDL-Colesterol (mg/dL)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcLdl}
                   onChange={(e) => setCalcLdl(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -907,9 +915,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">TGO / AST (U/L)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcAst}
                   onChange={(e) => setCalcAst(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
@@ -917,9 +926,10 @@ export const ExamRequisitionPage: React.FC = () => {
                 <label className="block text-slate-600 dark:text-slate-400 font-bold mb-1">TGP / ALT (U/L)</label>
                 <input
                   type="number"
+                  inputMode="decimal"
                   value={calcAlt}
                   onChange={(e) => setCalcAlt(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-slate-800 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono font-bold text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
             </div>
@@ -1093,13 +1103,14 @@ export const ExamRequisitionPage: React.FC = () => {
                         <td className="p-3">
                           <input
                             type="number"
+                            inputMode="decimal"
                             value={currentVal || ''}
                             onChange={(e) => setEnteredResults({
                               ...enteredResults,
                               [exam.id]: Number(e.target.value)
                             })}
                             placeholder="Lançar valor"
-                            className="w-24 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 font-mono font-bold text-center"
+                            className="w-28 min-h-[44px] px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 font-mono font-bold text-center text-base sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                           />
                         </td>
                         <td className="p-3 text-[11px] text-slate-600 dark:text-slate-400">

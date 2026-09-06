@@ -151,7 +151,7 @@ export const SkinfoldConsistencyModal: React.FC<SkinfoldConsistencyModalProps> =
           <button
             type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer active:scale-95 shrink-0"
             aria-label="Fechar auditoria"
           >
             <X className="w-5 h-5" />
@@ -159,7 +159,7 @@ export const SkinfoldConsistencyModal: React.FC<SkinfoldConsistencyModalProps> =
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
           {isLoading ? (
             <div className="py-16 flex flex-col items-center justify-center text-center space-y-4">
               <div className="w-12 h-12 rounded-full border-3 border-amber-200 dark:border-amber-900 border-t-amber-600 dark:border-t-amber-400 animate-spin" />
@@ -337,7 +337,7 @@ export const SkinfoldConsistencyModal: React.FC<SkinfoldConsistencyModalProps> =
                                   onSelectFoldToCorrect(issue.skinfoldKey as SkinfoldKey);
                                   onClose();
                                 }}
-                                className="text-xs px-2.5 py-1 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900 rounded-lg border border-sky-200 dark:border-sky-800 font-medium transition-colors flex-shrink-0 cursor-pointer"
+                                className="text-xs px-3 py-2 min-h-[44px] text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900 rounded-xl border border-sky-200 dark:border-sky-800 font-medium transition-colors flex-shrink-0 cursor-pointer active:scale-95 flex items-center justify-center"
                                 title="Ver dica rápida e ajustar dobra"
                               >
                                 Conferir Dobra
@@ -387,13 +387,13 @@ export const SkinfoldConsistencyModal: React.FC<SkinfoldConsistencyModalProps> =
         </div>
 
         {/* Modal Bottom Actions */}
-        <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+        <div className="px-5 sm:px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
             {onAppendToNotes && result && (
               <button
                 type="button"
                 onClick={handleApplyToObservations}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors shadow-2xs cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors shadow-2xs cursor-pointer active:scale-95"
                 title="Salvar resultado da auditoria nas anotações do prontuário"
               >
                 {copiedNote ? (
@@ -415,7 +415,7 @@ export const SkinfoldConsistencyModal: React.FC<SkinfoldConsistencyModalProps> =
                 type="button"
                 onClick={onReanalyze}
                 disabled={isLoading}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer disabled:opacity-50 active:scale-95"
                 title="Executar nova auditoria"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -427,7 +427,7 @@ export const SkinfoldConsistencyModal: React.FC<SkinfoldConsistencyModalProps> =
           <button
             type="button"
             onClick={onClose}
-            className="w-full sm:w-auto px-5 py-2 rounded-xl text-xs font-bold bg-slate-900 dark:bg-sky-600 text-white hover:bg-slate-800 dark:hover:bg-sky-500 transition-colors shadow-xs cursor-pointer"
+            className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] rounded-xl text-xs font-bold bg-slate-900 dark:bg-sky-600 text-white hover:bg-slate-800 dark:hover:bg-sky-500 transition-colors shadow-xs cursor-pointer active:scale-95 flex items-center justify-center"
           >
             Concluir Auditoria
           </button>

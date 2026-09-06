@@ -91,63 +91,63 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
   ];
 
   return (
-    <div id="card-perimetria" className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-6 transition-all">
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-100 dark:border-slate-800">
+    <div id="card-perimetria" className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-4 sm:p-6 transition-all">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 sm:mb-5 border-b border-slate-100 dark:border-slate-800 gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-900/60 shadow-2xs">
-            <Ruler className="w-4 h-4" />
+          <div className="w-10 h-10 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-900/60 shadow-2xs shrink-0">
+            <Ruler className="w-5 h-5 sm:w-4 sm:h-4" />
           </div>
           <div>
             <h2 className="text-sm font-bold tracking-tight text-slate-900 dark:text-white uppercase font-sans">
               Perimetria & Circunferências Corporais
             </h2>
-            <span className="text-xs text-slate-500 dark:text-slate-400">
+            <span className="text-xs text-slate-500 dark:text-slate-400 block sm:inline">
               Módulo complementar para cálculo de RCQ e proporcionalidade muscular.
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-end sm:self-auto">
           {onOpenAutoFill && (
             <button
               type="button"
               onClick={onOpenAutoFill}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer active:scale-95"
               title="Importar perimetrias via Bluetooth ou arquivo TXT/CSV"
             >
               <Bluetooth className="w-3.5 h-3.5 text-sky-500" />
-              <span>Importar Sensor</span>
+              <span>Sensor</span>
             </button>
           )}
 
           <button
             type="button"
             onClick={() => handleOpenGuide('cintura')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/60 border border-sky-200 dark:border-sky-800 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-1.5 text-xs font-semibold rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/60 border border-sky-200 dark:border-sky-800 transition-colors cursor-pointer active:scale-95"
             title="Abrir guia de demarcação anatômica das medidas de perimetria"
           >
             <Compass className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-            <span>Guia Anatômico</span>
+            <span>Guia</span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
+            className="min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer active:scale-95"
             title={isExpanded ? 'Recolher campos' : 'Expandir campos'}
             aria-label={isExpanded ? 'Recolher campos de perimetria' : 'Expandir campos de perimetria'}
           >
-            {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            {isExpanded ? <ChevronUp className="w-5 h-5 sm:w-4 sm:h-4" /> : <ChevronDown className="w-5 h-5 sm:w-4 sm:h-4" />}
           </button>
         </div>
       </div>
 
       {/* Bento Sub-Tile: Destaque para Cintura e Quadril -> Cálculo de RCQ */}
-      <div className="mb-5 p-5 rounded-2xl bg-sky-50/60 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/60">
+      <div className="mb-4 sm:mb-5 p-4 sm:p-5 rounded-2xl bg-sky-50/60 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/60">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <HeartPulse className="w-4 h-4 text-sky-700 dark:text-sky-400" />
+              <HeartPulse className="w-4 h-4 text-sky-700 dark:text-sky-400 shrink-0" />
               <strong className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide">
                 Relação Cintura / Quadril (RCQ)
               </strong>
@@ -157,7 +157,7 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-4 shrink-0 bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-sky-100 dark:border-sky-900/60 shadow-2xs">
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-start gap-4 shrink-0 bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-sky-100 dark:border-sky-900/60 shadow-2xs">
             <div>
               <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase block font-mono">Índice RCQ</span>
               <span className="text-xl font-bold font-mono text-slate-900 dark:text-white tabular-nums">
@@ -183,7 +183,7 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
       </div>
 
       {isExpanded && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 pt-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 pt-1">
           {perimetryFields.map((field) => {
             const val = perimetry[field.key];
             const isHighlight = field.key === 'cintura' || field.key === 'quadril';
@@ -202,7 +202,7 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
                 <div className="flex items-center justify-between gap-1 mb-1.5">
                   <label
                     htmlFor={`input-perimetria-${field.key}`}
-                    className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate"
+                    className="block text-xs sm:text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate"
                     title={field.label}
                   >
                     {field.label}
@@ -212,11 +212,11 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
                   <button
                     type="button"
                     onClick={() => handleOpenGuide(field.key)}
-                    className="p-1 -mr-1 rounded-full text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/70 dark:hover:bg-sky-950/80 transition-all cursor-pointer shrink-0 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="min-h-[36px] min-w-[36px] -mr-1 rounded-xl text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/70 dark:hover:bg-sky-950/80 transition-all cursor-pointer shrink-0 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-sky-500"
                     title={`Ponto anatômico correto: ${guideDef?.anatomicalLandmarks || 'Clique para ver a instrução e diagrama'}`}
                     aria-label={`Ver explicação anatômica para medição de ${field.label}`}
                   >
-                    <HelpCircle className="w-3.5 h-3.5" />
+                    <HelpCircle className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                   </button>
                 </div>
 
@@ -224,6 +224,7 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
                   <input
                     id={`input-perimetria-${field.key}`}
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     min="10"
                     max="200"
@@ -233,9 +234,9 @@ export const PerimetryCard: React.FC<PerimetryCardProps> = ({
                       const v = e.target.value === '' ? null : parseFloat(e.target.value);
                       onChangePerimetry(field.key, v);
                     }}
-                    className="w-full pl-3 pr-8 py-2 text-xs font-mono font-medium text-slate-900 dark:text-white bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400"
+                    className="w-full min-h-[44px] pl-3 pr-9 py-2 text-base sm:text-xs font-mono font-medium text-slate-900 dark:text-white bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-400"
                   />
-                  <span className="absolute right-2.5 top-2.5 text-[11px] font-mono text-slate-500 dark:text-slate-400 pointer-events-none">
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-500 dark:text-slate-400 pointer-events-none">
                     cm
                   </span>
                 </div>

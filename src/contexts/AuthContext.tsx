@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 import { authService } from '../services/authService';
 import { supabase } from '../services/supabase';
+import { professionalService, Professional } from '../services/professionalService';
 
 export type UserRole = 
   | 'Administrador'
@@ -21,7 +22,7 @@ export interface ClinicalProfessional {
   councilState: string;
   specialty: string;
   email: string;
-  phone: string;
+  phone?: string;
   avatar?: string;
   status: 'ativo' | 'inativo';
   allFeaturesEnabled: boolean;
@@ -41,18 +42,24 @@ export interface User {
 
 interface AuthContextType {
   user: User | null;
+  profile: Professional | null;
+  loading: boolean;
   setUser: (user: User | null) => void;
+  setProfile: (profile: Professional | null) => void;
   logout: () => void;
   hasPermission: (allowedRoles?: UserRole[]) => boolean;
   allProfessionalFeaturesActive: boolean;
   setAllProfessionalFeaturesActive: (active: boolean) => void;
   activePrescriberType: 'nutricionista' | 'medico';
   setActivePrescriberType: (type: 'nutricionista' | 'medico') => void;
+  schemaError: boolean;
   professionals: ClinicalProfessional[];
   toggleProfessionalFeatures: (id: string) => void;
   updateProfessional: (prof: ClinicalProfessional) => void;
   addProfessional: (prof: Omit<ClinicalProfessional, 'id'>) => void;
   activateAllTeamFeatures: () => void;
+  signInWithPassword: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, name: string) => Promise<void>;
 }
 
 const DEFAULT_PROFESSIONALS: ClinicalProfessional[] = [
@@ -129,45 +136,112 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [activePrescriberType, setActivePrescriberType] = useState<'nutricionista' | 'medico'>('nutricionista');
 
-  const [professionals, setProfessionals] = useState<ClinicalProfessional[]>(() => {
-    const saved = localStorage.getItem('nutri_saas_professionals_list');
-    return saved ? JSON.parse(saved) : DEFAULT_PROFESSIONALS;
-  });
-
   const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<Professional | null>(null);
   const [loading, setLoading] = useState(true);
+  const [schemaError, setSchemaError] = useState(false);
+  const [professionals, setProfessionals] = useState<ClinicalProfessional[]>([]);
+
+  const loadProfessionals = async () => {
+    try {
+      const data = await professionalService.getAll();
+      const clinicalProfs: ClinicalProfessional[] = data.map(p => ({
+        id: p.id,
+        name: p.name,
+        role: p.role as UserRole,
+        councilType: p.council_type as any,
+        councilNumber: p.council_number,
+        councilState: p.council_state,
+        specialty: p.specialty,
+        email: p.email,
+        status: p.status as any,
+        allFeaturesEnabled: true,
+        prescriberType: p.prescriber_type as any,
+        signatureText: `${p.name} - ${p.council_type}-${p.council_state} ${p.council_number}`
+      }));
+      setProfessionals(clinicalProfs);
+    } catch (err) {
+      console.error('Error loading professionals:', err);
+    }
+  };
 
   useEffect(() => {
-    // Check active sessions and sets the user
-    authService.getSession().then(session => {
-      if (session?.user) {
+    const loadUserAndProfile = async (sessionUser: any) => {
+      if (!sessionUser) {
+        setUser(null);
+        setProfile(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // Fetch or create clinical profile
+        let profileData = await professionalService.getById(sessionUser.id);
+        
+        if (!profileData) {
+          // Create default profile if it doesn't exist
+          profileData = await professionalService.upsert({
+            id: sessionUser.id,
+            name: sessionUser.user_metadata?.name || 'Nutricionista',
+            email: sessionUser.email || '',
+            role: sessionUser.user_metadata?.role || 'Nutricionista',
+            council_type: 'CRN',
+            council_number: 'PENDENTE',
+            council_state: 'SP',
+            specialty: 'Nutrição Geral',
+            status: 'ativo',
+            prescriber_type: 'nutricionista'
+          });
+        }
+
+        setProfile(profileData);
+
         setUser({
-          id: session.user.id,
-          name: session.user.user_metadata?.name || 'Nutricionista',
-          role: session.user.user_metadata?.role || 'Nutricionista',
-          email: session.user.email || '',
-          avatar: session.user.user_metadata?.avatar_url,
+          id: sessionUser.id,
+          name: profileData.name,
+          role: profileData.role as UserRole,
+          email: profileData.email,
+          avatar: profileData.avatar_url || sessionUser.user_metadata?.avatar_url,
+          status: 'online',
+          councilInfo: `${profileData.council_type}-${profileData.council_state} ${profileData.council_number}`
+        });
+
+        if (profileData.prescriber_type === 'medico' || profileData.prescriber_type === 'nutricionista') {
+          setActivePrescriberType(profileData.prescriber_type);
+        }
+
+        // Also load the team
+        await loadProfessionals();
+
+      } catch (err: any) {
+        if (err.code === 'PGRST205') {
+          console.warn('Database schema not initialized (PGRST205). Instructions shown on UI.');
+          setSchemaError(true);
+        } else {
+          console.error('Error loading professional profile:', err);
+        }
+        // Fallback to basic metadata if DB fails
+        setUser({
+          id: sessionUser.id,
+          name: sessionUser.user_metadata?.name || 'Nutricionista',
+          role: sessionUser.user_metadata?.role || 'Nutricionista',
+          email: sessionUser.email || '',
+          avatar: sessionUser.user_metadata?.avatar_url,
           status: 'online'
         });
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
+    };
+
+    // Check active sessions
+    authService.getSession().then(session => {
+      loadUserAndProfile(session?.user);
     });
 
-    // Listen for changes on auth state (sign in, sign out, etc.)
+    // Listen for changes
     const { data: { subscription } } = authService.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          name: session.user.user_metadata?.name || 'Nutricionista',
-          role: session.user.user_metadata?.role || 'Nutricionista',
-          email: session.user.email || '',
-          avatar: session.user.user_metadata?.avatar_url,
-          status: 'online'
-        });
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
+      loadUserAndProfile(session?.user);
     });
 
     return () => {
@@ -178,10 +252,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     localStorage.setItem('nutri_saas_all_pro_features', JSON.stringify(allProfessionalFeaturesActive));
   }, [allProfessionalFeaturesActive]);
-
-  useEffect(() => {
-    localStorage.setItem('nutri_saas_professionals_list', JSON.stringify(professionals));
-  }, [professionals]);
 
   const hasPermission = (allowedRoles?: UserRole[]) => {
     // Quando todas as funções profissionais estão ativadas, concede acesso a todos os módulos
@@ -219,6 +289,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  const signInWithPassword = async (email: string, password: string) => {
+    await authService.signIn(email, password);
+  };
+
+  const signUp = async (email: string, password: string, name: string) => {
+    await authService.signUp(email, password, name);
+  };
+
   const logout = async () => {
     await authService.signOut();
     setUser(null);
@@ -228,18 +306,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <AuthContext.Provider
       value={{
         user,
+        profile,
+        loading,
         setUser,
+        setProfile,
         logout,
         hasPermission,
         allProfessionalFeaturesActive,
         setAllProfessionalFeaturesActive,
         activePrescriberType,
         setActivePrescriberType,
+        schemaError,
         professionals,
         toggleProfessionalFeatures,
         updateProfessional,
         addProfessional,
-        activateAllTeamFeatures
+        activateAllTeamFeatures,
+        signInWithPassword,
+        signUp
       }}
     >
       {children}

@@ -123,10 +123,10 @@ export const AnvisaTablePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Formulário de Especificação do Alimento */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 shadow-2xs space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-6 shadow-2xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-slate-100 dark:border-slate-800 pb-3">
               <h2 className="text-sm font-bold text-slate-900 dark:text-white font-sans flex items-center gap-2">
-                <FileText className="w-4 h-4 text-sky-500" />
+                <FileText className="w-4 h-4 text-sky-500 shrink-0" />
                 <span>Dados do Produto & Porcionamento</span>
               </h2>
               <span className="text-[11px] font-mono text-slate-400">
@@ -134,7 +134,7 @@ export const AnvisaTablePage: React.FC = () => {
               </span>
             </div>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-3.5 text-xs">
               <div>
                 <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
                   Nome Comercial do Alimento
@@ -143,11 +143,11 @@ export const AnvisaTablePage: React.FC = () => {
                   type="text"
                   value={foodItem.nomeProduto}
                   onChange={(e) => setFoodItem({ ...foodItem, nomeProduto: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
                     Natureza Física
@@ -155,7 +155,7 @@ export const AnvisaTablePage: React.FC = () => {
                   <select
                     value={foodItem.tipoAlimento}
                     onChange={(e) => setFoodItem({ ...foodItem, tipoAlimento: e.target.value as any })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
                   >
                     <option value="solido">Alimento Sólido (g)</option>
                     <option value="liquido">Alimento Líquido (mL)</option>
@@ -168,23 +168,25 @@ export const AnvisaTablePage: React.FC = () => {
                   </label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     value={foodItem.pesoTotalEmbalagemG}
                     onChange={(e) => setFoodItem({ ...foodItem, pesoTotalEmbalagemG: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
                     Tamanho da Porção ({foodItem.tipoAlimento === 'solido' ? 'g' : 'mL'})
                   </label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     value={foodItem.tamanhoPorcaoG}
                     onChange={(e) => setFoodItem({ ...foodItem, tamanhoPorcaoG: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -197,7 +199,7 @@ export const AnvisaTablePage: React.FC = () => {
                     value={foodItem.medidaCaseira}
                     onChange={(e) => setFoodItem({ ...foodItem, medidaCaseira: e.target.value })}
                     placeholder="Ex: 2 colheres de sopa (30g)"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
               </div>
@@ -205,21 +207,22 @@ export const AnvisaTablePage: React.FC = () => {
 
             {/* Nutrientes Base (100g) */}
             <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider font-mono">
                   Nutrientes por 100g ou 100mL
                 </span>
                 <span className="text-[11px] text-slate-400">Valores analíticos base</span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs font-mono">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs font-mono">
                 <div>
                   <label className="block text-[11px] text-slate-500 mb-0.5">Energético (kcal)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     value={foodItem.valoresPor100g.valorEnergeticoKcal}
                     onChange={(e) => handleNutrientChange('valorEnergeticoKcal', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -227,10 +230,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Carboidratos (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.carboidratosG}
                     onChange={(e) => handleNutrientChange('carboidratosG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -238,10 +242,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Açúcares Totais (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.acucaresTotaisG}
                     onChange={(e) => handleNutrientChange('acucaresTotaisG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -249,10 +254,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Açúcar Adicionado (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.acucaresAdicionadosG}
                     onChange={(e) => handleNutrientChange('acucaresAdicionadosG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -260,10 +266,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Proteínas (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.proteinasG}
                     onChange={(e) => handleNutrientChange('proteinasG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -271,10 +278,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Gorduras Totais (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.gordurasTotaisG}
                     onChange={(e) => handleNutrientChange('gordurasTotaisG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -282,10 +290,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Gord. Saturadas (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.gordurasSaturadasG}
                     onChange={(e) => handleNutrientChange('gordurasSaturadasG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -293,10 +302,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Gorduras Trans (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.gordurasTransG}
                     onChange={(e) => handleNutrientChange('gordurasTransG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -304,10 +314,11 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Fibra Alimentar (g)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={foodItem.valoresPor100g.fibraAlimentarG}
                     onChange={(e) => handleNutrientChange('fibraAlimentarG', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -315,9 +326,10 @@ export const AnvisaTablePage: React.FC = () => {
                   <label className="block text-[11px] text-slate-500 mb-0.5">Sódio (mg)</label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     value={foodItem.valoresPor100g.sodioMg}
                     onChange={(e) => handleNutrientChange('sodioMg', parseFloat(e.target.value))}
-                    className="w-full px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
               </div>

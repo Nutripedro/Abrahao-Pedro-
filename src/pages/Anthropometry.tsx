@@ -235,12 +235,12 @@ export const HistoricalEvolutionDashboard: React.FC<HistoricalEvolutionDashboard
   return (
     <div
       id="dashboard-evolucao-historica"
-      className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-6 sm:p-7 space-y-6 transition-colors duration-200"
+      className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-4 sm:p-7 space-y-4 sm:space-y-6 transition-colors duration-200"
     >
       {/* 1. Header do Dashboard */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-sky-50 dark:bg-sky-950/70 text-sky-700 dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-800/80 shadow-2xs">
+          <div className="w-10 h-10 rounded-2xl bg-sky-50 dark:bg-sky-950/70 text-sky-700 dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-800/80 shadow-2xs shrink-0">
             <Activity className="w-5 h-5" />
           </div>
           <div>
@@ -259,13 +259,13 @@ export const HistoricalEvolutionDashboard: React.FC<HistoricalEvolutionDashboard
         </div>
 
         {/* Controles de Visualização */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
           {/* Seletor de Modo de Gráfico */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/70 text-xs">
+          <div className="flex items-center bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/70 text-xs overflow-x-auto no-scrollbar max-w-full flex-nowrap shrink-0">
             <button
               type="button"
               onClick={() => setChartMode('dual')}
-              className={`px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
                 chartMode === 'dual'
                   ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -276,7 +276,7 @@ export const HistoricalEvolutionDashboard: React.FC<HistoricalEvolutionDashboard
             <button
               type="button"
               onClick={() => setChartMode('gordura')}
-              className={`px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
                 chartMode === 'gordura'
                   ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -287,7 +287,7 @@ export const HistoricalEvolutionDashboard: React.FC<HistoricalEvolutionDashboard
             <button
               type="button"
               onClick={() => setChartMode('peso')}
-              className={`px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
                 chartMode === 'peso'
                   ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -298,7 +298,7 @@ export const HistoricalEvolutionDashboard: React.FC<HistoricalEvolutionDashboard
             <button
               type="button"
               onClick={() => setChartMode('composicao')}
-              className={`px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl font-semibold transition-all cursor-pointer whitespace-nowrap active:scale-95 ${
                 chartMode === 'composicao'
                   ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -310,7 +310,7 @@ export const HistoricalEvolutionDashboard: React.FC<HistoricalEvolutionDashboard
 
           {/* Toggle Incluir Avaliação Atual */}
           {currentRecord && currentRecord.results.isValid && (
-            <label className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer bg-slate-50 dark:bg-slate-800/40 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label className="min-h-[40px] flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer bg-slate-50 dark:bg-slate-800/40 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800">
               <input
                 type="checkbox"
                 checked={includeCurrent}
@@ -1106,7 +1106,7 @@ export function Anthropometry() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-7">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
         {/* Floating Toast Message */}
         {toastMessage && (
           <div className="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-5">
@@ -1155,9 +1155,9 @@ export function Anthropometry() {
           <button
             type="button"
             onClick={() => setIsAutoFillOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl text-white bg-slate-900 dark:bg-sky-600 hover:bg-slate-800 dark:hover:bg-sky-500 shadow-xs transition-all cursor-pointer shrink-0 self-start sm:self-auto"
+            className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold rounded-xl text-white bg-slate-900 dark:bg-sky-600 hover:bg-slate-800 dark:hover:bg-sky-500 shadow-xs transition-all cursor-pointer shrink-0 self-stretch sm:self-auto active:scale-95"
           >
-            <Bluetooth className="w-3.5 h-3.5 text-sky-400 dark:text-white" />
+            <Bluetooth className="w-4 h-4 text-sky-400 dark:text-white" />
             <span>Abrir Preenchimento Automático</span>
           </button>
         </div>
@@ -1214,7 +1214,7 @@ export function Anthropometry() {
               <button
                 type="button"
                 onClick={() => setSideViewMode('dica-rapida')}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold font-sans transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 min-h-[44px] py-2 px-3 rounded-xl text-xs font-bold font-sans transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
                   sideViewMode === 'dica-rapida'
                     ? 'bg-slate-900 text-white dark:bg-sky-600 shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -1226,7 +1226,7 @@ export function Anthropometry() {
               <button
                 type="button"
                 onClick={() => setSideViewMode('mapa-corporal')}
-                className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold font-sans transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                className={`flex-1 min-h-[44px] py-2 px-3 rounded-xl text-xs font-bold font-sans transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 ${
                   sideViewMode === 'mapa-corporal'
                     ? 'bg-slate-900 text-white dark:bg-sky-600 shadow-xs'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -1272,15 +1272,15 @@ export function Anthropometry() {
 
         {/* Section 8, 9, 11, 15: RESULTADO PRINCIPAL & DASHBOARD DE RESULTADOS */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 rounded-full bg-sky-600"></span>
-              <h2 className="text-base font-bold font-sans text-slate-900 tracking-tight">
+              <h2 className="text-base font-bold font-sans text-slate-900 dark:text-white tracking-tight">
                 Resultado da Avaliação & Diagnóstico Antropométrico
               </h2>
             </div>
             {calculationResults.isValid && (
-              <span className="text-xs font-mono text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 font-bold">
+              <span className="text-xs font-mono text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800 font-bold self-start sm:self-auto">
                 Cálculo Validado em Tempo Real
               </span>
             )}
@@ -1325,19 +1325,19 @@ export function Anthropometry() {
         )}
 
         {/* Observações Clínicas & Conduta Nutricional */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2.5">
-            <label htmlFor="textarea-observacoes" className="block text-xs font-bold text-slate-900 uppercase font-mono">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-4 sm:p-7 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
+            <label htmlFor="textarea-observacoes" className="block text-xs font-bold text-slate-900 dark:text-slate-200 uppercase font-mono">
               Observações Clínicas & Orientações ao Paciente
             </label>
             <button
               type="button"
               onClick={handleGenerateSummary}
               disabled={!calculationResults.isValid || isGeneratingSummary}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full transition-colors border ${
+              className={`min-h-[44px] flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full transition-colors border cursor-pointer active:scale-95 self-start sm:self-auto ${
                 !calculationResults.isValid || isGeneratingSummary
-                  ? 'bg-slate-50 text-slate-400 border-slate-200 cursor-not-allowed'
-                  : 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100'
+                  ? 'bg-slate-50 dark:bg-slate-800/50 text-slate-400 border-slate-200 dark:border-slate-700 cursor-not-allowed'
+                  : 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-900/60'
               }`}
             >
               {isGeneratingSummary ? (
@@ -1354,7 +1354,7 @@ export function Anthropometry() {
             value={patient.observacoes || ''}
             onChange={(e) => handlePatientChange({ observacoes: e.target.value })}
             placeholder="Registre aqui metas de recomposição, plano de hidratação, orientações de treino resistido e data para a próxima avaliação antropométrica..."
-            className="w-full p-4 text-xs text-slate-800 bg-slate-50/70 border border-slate-200/90 rounded-2xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white resize-none transition-all placeholder:text-slate-400"
+            className="w-full p-4 text-sm sm:text-xs text-slate-800 dark:text-slate-100 bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200/90 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 resize-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
           />
         </div>
 
@@ -1375,16 +1375,16 @@ export function Anthropometry() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md border-t border-slate-200/90 py-8 mt-12 text-xs text-slate-500">
+      <footer className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200/90 dark:border-slate-800 py-6 sm:py-8 mt-8 sm:mt-12 text-xs text-slate-500 dark:text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800 font-sans">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-bold text-slate-800 dark:text-slate-200 font-sans">
               Calculadora de Gordura por Dobras
             </span>
             <span>•</span>
             <span>Jackson & Pollock (1978/1980) e Durnin & Womersley (1974)</span>
           </div>
-          <div className="text-[11px] text-slate-500">
+          <div className="text-[11px] text-slate-500 dark:text-slate-400">
             Conformidade LGPD (Art. 7º e 11) • Armazenamento local seguro e confidencial.
           </div>
         </div>

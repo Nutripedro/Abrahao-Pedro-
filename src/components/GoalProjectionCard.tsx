@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { motion } from 'motion/react';
 import {
   Target,
   ArrowDown,
@@ -127,23 +128,29 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
   const isManutencao = simulation.tipoMeta === 'manutencao';
 
   return (
-    <div id="simulador-metas" className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-7 space-y-6">
+    <motion.div
+      id="simulador-metas"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-4 sm:p-7 space-y-6"
+    >
       {/* Cabeçalho do Módulo Clínico */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200/70 shadow-2xs shrink-0 mt-0.5">
-            <Target className="w-5 h-5 text-emerald-700" />
+          <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center border border-emerald-200/70 dark:border-emerald-800 shadow-2xs shrink-0 mt-0.5">
+            <Target className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-sm font-bold tracking-tight text-slate-900 uppercase font-sans">
+              <h2 className="text-sm font-bold tracking-tight text-slate-900 dark:text-white uppercase font-sans">
                 Simulador de Metas de Composição Corporal
               </h2>
-              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                 Modelo Heymsfield & ACSM
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Projeção de peso alvo e redução lipídica assumindo manutenção de 100% da massa livre de gordura ({simulation.massaLivreGorduraPreservadaKg.toFixed(1)} kg).
             </p>
           </div>
@@ -153,17 +160,17 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
         <button
           type="button"
           onClick={handleCopySummary}
-          className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 shadow-2xs transition-all cursor-pointer shrink-0 self-start sm:self-auto"
+          className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 border border-slate-200/90 dark:border-slate-700 shadow-2xs transition-all cursor-pointer shrink-0 self-start sm:self-auto"
           title="Transfere a síntese do cálculo da meta para as observações da consulta"
         >
           {isCopied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="text-emerald-700 font-bold">Inserido nas Observações!</span>
+              <Check className="w-4 h-4 text-emerald-600" />
+              <span className="text-emerald-700 dark:text-emerald-400 font-bold">Inserido nas Observações!</span>
             </>
           ) : (
             <>
-              <Copy className="w-3.5 h-3.5 text-slate-500" />
+              <Copy className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>Inserir na Conduta Clínica</span>
             </>
           )}
@@ -171,23 +178,23 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
       </div>
 
       {/* Painel Interativo de Entrada do % Alvo */}
-      <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-5 space-y-4">
+      <div className="bg-slate-50/70 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700 rounded-2xl p-4 sm:p-5 space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <label htmlFor="input-meta-gordura" className="block text-xs font-bold text-slate-800 uppercase font-mono tracking-wider">
+            <label htmlFor="input-meta-gordura" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase font-mono tracking-wider">
               Definir Objetivo de % de Gordura Corporal
             </label>
-            <span className="text-[11px] text-slate-500 block mt-0.5">
-              Gordura Atual: <strong className="font-mono text-slate-800">{results.percentualGordura.toFixed(1)}%</strong> ({results.gorduraClassificacao}) | Faixa Normativa Saudável: <span className="font-mono font-semibold text-slate-700">{results.faixaReferencia}</span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 block mt-0.5">
+              Gordura Atual: <strong className="font-mono text-slate-800 dark:text-slate-200">{results.percentualGordura.toFixed(1)}%</strong> ({results.gorduraClassificacao}) | Faixa Normativa Saudável: <span className="font-mono font-semibold text-slate-700 dark:text-slate-300">{results.faixaReferencia}</span>
             </span>
           </div>
 
-          {/* Campo Numérico com Controles Finos */}
+          {/* Campo Numérico com Controles Finos (Touch-friendly 44px) */}
           <div className="flex items-center gap-2 self-start md:self-auto">
             <button
               type="button"
               onClick={() => handleStepChange(-0.5)}
-              className="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center justify-center font-mono font-bold text-sm shadow-2xs cursor-pointer transition-colors"
+              className="min-h-[44px] min-w-[44px] w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 flex items-center justify-center font-mono font-bold text-lg shadow-2xs cursor-pointer transition-all"
               title="Diminuir 0.5%"
             >
               -
@@ -197,6 +204,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
               <input
                 id="input-meta-gordura"
                 type="number"
+                inputMode="decimal"
                 min="3.0"
                 max="60.0"
                 step="0.1"
@@ -205,9 +213,9 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
                   const val = parseFloat(e.target.value);
                   if (!isNaN(val)) setTargetFatInput(val);
                 }}
-                className="w-28 text-center px-2 py-1.5 text-lg font-bold font-mono text-slate-900 bg-white border-2 border-emerald-500 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-emerald-400/40 shadow-xs tabular-nums"
+                className="w-32 min-h-[44px] text-center px-3 py-2 text-lg font-bold font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900 border-2 border-emerald-500 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-emerald-400/40 shadow-xs tabular-nums"
               />
-              <span className="absolute right-3 pointer-events-none text-xs font-bold font-mono text-slate-400">
+              <span className="absolute right-3.5 pointer-events-none text-xs font-bold font-mono text-slate-400">
                 %
               </span>
             </div>
@@ -215,7 +223,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
             <button
               type="button"
               onClick={() => handleStepChange(0.5)}
-              className="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center justify-center font-mono font-bold text-sm shadow-2xs cursor-pointer transition-colors"
+              className="min-h-[44px] min-w-[44px] w-11 h-11 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 flex items-center justify-center font-mono font-bold text-lg shadow-2xs cursor-pointer transition-all"
               title="Aumentar 0.5%"
             >
               +
@@ -227,7 +235,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
         <div className="space-y-1.5 pt-1">
           <div className="flex justify-between text-[10px] font-mono text-slate-400">
             <span>3.0% (Mínimo Biológico)</span>
-            <span className="text-emerald-700 font-bold">Alvo Selecionado: {targetFatInput.toFixed(1)}%</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold">Alvo Selecionado: {targetFatInput.toFixed(1)}%</span>
             <span>40.0%</span>
           </div>
           <input
@@ -237,7 +245,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
             step="0.1"
             value={targetFatInput}
             onChange={(e) => setTargetFatInput(parseFloat(e.target.value))}
-            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700"
+            className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600"
           />
         </div>
 
@@ -249,21 +257,21 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
           <button
             type="button"
             onClick={() => handleApplyPreset(minNormativo)}
-            className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:text-emerald-800 transition-colors shadow-2xs"
+            className="min-h-[40px] px-3 py-2 text-[11px] font-mono font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-800 dark:hover:text-emerald-400 active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             Mín. Saudável ({minNormativo.toFixed(1)}%)
           </button>
           <button
             type="button"
             onClick={() => handleApplyPreset(mediaNormativa)}
-            className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:text-emerald-800 transition-colors shadow-2xs"
+            className="min-h-[40px] px-3 py-2 text-[11px] font-mono font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-800 dark:hover:text-emerald-400 active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             Média ({mediaNormativa.toFixed(1)}%)
           </button>
           <button
             type="button"
             onClick={() => handleApplyPreset(maxNormativo)}
-            className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:text-emerald-800 transition-colors shadow-2xs"
+            className="min-h-[40px] px-3 py-2 text-[11px] font-mono font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-800 dark:hover:text-emerald-400 active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             Máx. Saudável ({maxNormativo.toFixed(1)}%)
           </button>
@@ -271,7 +279,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
             <button
               type="button"
               onClick={() => handleApplyPreset(results.percentualGordura - 3)}
-              className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:text-emerald-800 transition-colors shadow-2xs"
+              className="min-h-[40px] px-3 py-2 text-[11px] font-mono font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-800 dark:hover:text-emerald-400 active:scale-95 transition-all shadow-2xs cursor-pointer"
             >
               Redução Moderada (-3%)
             </button>
@@ -280,7 +288,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
             <button
               type="button"
               onClick={() => handleApplyPreset(results.percentualGordura - 5)}
-              className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:text-emerald-800 transition-colors shadow-2xs"
+              className="min-h-[40px] px-3 py-2 text-[11px] font-mono font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-800 dark:hover:text-emerald-400 active:scale-95 transition-all shadow-2xs cursor-pointer"
             >
               Redução Significativa (-5%)
             </button>
@@ -288,7 +296,7 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
           <button
             type="button"
             onClick={() => handleApplyPreset(sexo === 'masculino' ? 10 : 18)}
-            className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-emerald-400 hover:text-emerald-800 transition-colors shadow-2xs"
+            className="min-h-[40px] px-3 py-2 text-[11px] font-mono font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-800 dark:hover:text-emerald-400 active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             Atlético ({sexo === 'masculino' ? '10%' : '18%'})
           </button>
@@ -315,32 +323,32 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
         {/* Card 1: GORDURA A PERDER (Kg) - Destaque Central */}
         <div className={`p-4 rounded-2xl border transition-all ${
           isPerda
-            ? 'bg-emerald-50/70 border-emerald-200 text-emerald-950'
+            ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/80 text-emerald-950 dark:text-emerald-200'
             : isGanho
-            ? 'bg-sky-50/70 border-sky-200 text-sky-950'
-            : 'bg-slate-50 border-slate-200 text-slate-900'
+            ? 'bg-sky-50/70 dark:bg-sky-950/40 border-sky-200 dark:border-sky-800/80 text-sky-950 dark:text-sky-200'
+            : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white'
         }`}>
           <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider mb-2">
-            <span className={isPerda ? 'text-emerald-800' : isGanho ? 'text-sky-800' : 'text-slate-500'}>
+            <span className={isPerda ? 'text-emerald-800 dark:text-emerald-300' : isGanho ? 'text-sky-800 dark:text-sky-300' : 'text-slate-500 dark:text-slate-400'}>
               {isPerda ? 'Gordura a Perder' : isGanho ? 'Gordura a Ganhar' : 'Status da Gordura'}
             </span>
             {isPerda ? (
-              <ArrowDown className="w-4 h-4 text-emerald-600" />
+              <ArrowDown className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             ) : isGanho ? (
-              <ArrowUp className="w-4 h-4 text-sky-600" />
+              <ArrowUp className="w-4 h-4 text-sky-600 dark:text-sky-400" />
             ) : (
               <CheckCircle2 className="w-4 h-4 text-slate-400" />
             )}
           </div>
           <div className="flex items-baseline gap-1.5">
             <span className={`text-3xl font-extrabold font-mono tabular-nums ${
-              isPerda ? 'text-emerald-700' : isGanho ? 'text-sky-700' : 'text-slate-700'
+              isPerda ? 'text-emerald-700 dark:text-emerald-300' : isGanho ? 'text-sky-700 dark:text-sky-300' : 'text-slate-700 dark:text-slate-200'
             }`}>
               {Math.abs(simulation.gorduraDiferencaKg).toFixed(1)}
             </span>
-            <span className="text-sm font-bold font-mono text-slate-600">kg</span>
+            <span className="text-sm font-bold font-mono text-slate-600 dark:text-slate-400">kg</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block">
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
             {isPerda
               ? 'Massa adiposa pura a ser eliminada'
               : isGanho
@@ -350,54 +358,54 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
         </div>
 
         {/* Card 2: PESO TOTAL ALVO NA BALANÇA */}
-        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2">
+        <div className="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-2xs">
+          <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
             <span>Peso Alvo na Balança</span>
             <Scale className="w-4 h-4 text-slate-400" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-3xl font-extrabold font-mono text-slate-900 tabular-nums">
+            <span className="text-3xl font-extrabold font-mono text-slate-900 dark:text-white tabular-nums">
               {simulation.pesoAlvoKg.toFixed(1)}
             </span>
-            <span className="text-sm font-bold font-mono text-slate-500">kg</span>
+            <span className="text-sm font-bold font-mono text-slate-500 dark:text-slate-400">kg</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block font-mono">
             Variação: {simulation.pesoDiferencaKg > 0 ? `-${simulation.pesoDiferencaKg.toFixed(1)}` : `+${Math.abs(simulation.pesoDiferencaKg).toFixed(1)}`} kg
           </span>
         </div>
 
         {/* Card 3: MASSA MAGRA FIXA (100% PRESERVADA) */}
-        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2">
+        <div className="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-2xs">
+          <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
             <span>Massa Magra Mantida</span>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
               100% Fixa
             </span>
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-3xl font-extrabold font-mono text-slate-900 tabular-nums">
+            <span className="text-3xl font-extrabold font-mono text-slate-900 dark:text-white tabular-nums">
               {simulation.massaLivreGorduraPreservadaKg.toFixed(1)}
             </span>
-            <span className="text-sm font-bold font-mono text-slate-500">kg</span>
+            <span className="text-sm font-bold font-mono text-slate-500 dark:text-slate-400">kg</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block">
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
             Massa muscular, óssea e visceral
           </span>
         </div>
 
         {/* Card 4: MASSA GORDA FINAL ALVO */}
-        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-2">
+        <div className="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 shadow-2xs">
+          <div className="flex items-center justify-between text-xs font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
             <span>Massa Gorda Alvo</span>
             <Activity className="w-4 h-4 text-slate-400" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-3xl font-extrabold font-mono text-slate-900 tabular-nums">
+            <span className="text-3xl font-extrabold font-mono text-slate-900 dark:text-white tabular-nums">
               {simulation.massaGordaAlvoKg.toFixed(1)}
             </span>
-            <span className="text-sm font-bold font-mono text-slate-500">kg</span>
+            <span className="text-sm font-bold font-mono text-slate-500 dark:text-slate-400">kg</span>
           </div>
-          <span className="text-[11px] text-slate-500 mt-1 block font-mono">
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block font-mono">
             Exatos {simulation.percentualGorduraAlvo.toFixed(1)}% do peso final
           </span>
         </div>
@@ -406,110 +414,110 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
       {/* Tabela Comparativa Detalhada & Cronograma Clínico */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Coluna 1 e 2: Tabela Comparativa de Composição (Atual vs Meta vs Variação) */}
-        <div className="lg:col-span-2 overflow-x-auto">
-          <h3 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider mb-3">
+        <div className="lg:col-span-2 overflow-x-auto no-scrollbar pb-2">
+          <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase font-mono tracking-wider mb-3">
             Quadro Comparativo de Composição Corporal
           </h3>
 
-          <table className="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
-            <thead className="bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+          <table className="w-full text-left text-xs border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden min-w-[480px]">
+            <thead className="bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-mono border-b border-slate-200 dark:border-slate-700">
               <tr>
                 <th className="p-2.5 font-bold">Parâmetro Clínico</th>
                 <th className="p-2.5 font-bold text-right">Atual</th>
-                <th className="p-2.5 font-bold text-right text-emerald-800">Meta Alvo</th>
+                <th className="p-2.5 font-bold text-right text-emerald-800 dark:text-emerald-300">Meta Alvo</th>
                 <th className="p-2.5 font-bold text-right">Variação (Δ)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 font-sans">
-              <tr className="hover:bg-slate-50/50">
-                <td className="p-2.5 font-medium text-slate-900 flex items-center gap-1.5">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-sans">
+              <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                <td className="p-2.5 font-medium text-slate-900 dark:text-white flex items-center gap-1.5">
                   <span>Percentual de Gordura</span>
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-slate-800 tabular-nums">
+                <td className="p-2.5 text-right font-mono font-bold text-slate-800 dark:text-slate-200 tabular-nums">
                   {simulation.percentualGorduraAtual.toFixed(1)}%
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-emerald-700 tabular-nums bg-emerald-50/30">
+                <td className="p-2.5 text-right font-mono font-bold text-emerald-700 dark:text-emerald-400 tabular-nums bg-emerald-50/30 dark:bg-emerald-950/20">
                   {simulation.percentualGorduraAlvo.toFixed(1)}%
                 </td>
-                <td className="p-2.5 text-right font-mono font-semibold tabular-nums">
+                <td className="p-2.5 text-right font-mono font-semibold tabular-nums text-slate-700 dark:text-slate-300">
                   {simulation.percentualGorduraAlvo - simulation.percentualGorduraAtual > 0 ? '+' : ''}
                   {(simulation.percentualGorduraAlvo - simulation.percentualGorduraAtual).toFixed(1)}%
                 </td>
               </tr>
 
-              <tr className="hover:bg-slate-50/50 bg-emerald-50/10">
-                <td className="p-2.5 font-semibold text-slate-900">
+              <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40 bg-emerald-50/10 dark:bg-emerald-950/10">
+                <td className="p-2.5 font-semibold text-slate-900 dark:text-white">
                   Massa Gorda (Tecido Adiposo)
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-slate-800 tabular-nums">
+                <td className="p-2.5 text-right font-mono font-bold text-slate-800 dark:text-slate-200 tabular-nums">
                   {simulation.massaGordaAtualKg.toFixed(1)} kg
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-emerald-700 tabular-nums bg-emerald-50/30">
+                <td className="p-2.5 text-right font-mono font-bold text-emerald-700 dark:text-emerald-400 tabular-nums bg-emerald-50/30 dark:bg-emerald-950/20">
                   {simulation.massaGordaAlvoKg.toFixed(1)} kg
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold tabular-nums text-emerald-700">
+                <td className="p-2.5 text-right font-mono font-bold tabular-nums text-emerald-700 dark:text-emerald-400">
                   {simulation.gorduraDiferencaKg > 0 ? `-${simulation.gorduraDiferencaKg.toFixed(1)}` : `+${Math.abs(simulation.gorduraDiferencaKg).toFixed(1)}`} kg
                 </td>
               </tr>
 
-              <tr className="hover:bg-slate-50/50">
-                <td className="p-2.5 font-medium text-slate-700">
+              <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                <td className="p-2.5 font-medium text-slate-700 dark:text-slate-300">
                   Massa Livre de Gordura (Massa Magra)
                 </td>
-                <td className="p-2.5 text-right font-mono text-slate-700 tabular-nums">
+                <td className="p-2.5 text-right font-mono text-slate-700 dark:text-slate-300 tabular-nums">
                   {simulation.massaLivreGorduraPreservadaKg.toFixed(1)} kg
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-slate-900 tabular-nums bg-slate-50/50">
+                <td className="p-2.5 text-right font-mono font-bold text-slate-900 dark:text-white tabular-nums bg-slate-50/50 dark:bg-slate-800/50">
                   {simulation.massaLivreGorduraPreservadaKg.toFixed(1)} kg
                 </td>
-                <td className="p-2.5 text-right font-mono text-slate-400 tabular-nums">
+                <td className="p-2.5 text-right font-mono text-slate-400 dark:text-slate-500 tabular-nums">
                   0,0 kg (Constante)
                 </td>
               </tr>
 
-              <tr className="hover:bg-slate-50/50">
-                <td className="p-2.5 font-bold text-slate-900">
+              <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                <td className="p-2.5 font-bold text-slate-900 dark:text-white">
                   Peso Corporal Total
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-slate-800 tabular-nums">
+                <td className="p-2.5 text-right font-mono font-bold text-slate-800 dark:text-slate-200 tabular-nums">
                   {simulation.pesoAtualKg.toFixed(1)} kg
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold text-emerald-700 tabular-nums bg-emerald-50/30">
+                <td className="p-2.5 text-right font-mono font-bold text-emerald-700 dark:text-emerald-400 tabular-nums bg-emerald-50/30 dark:bg-emerald-950/20">
                   {simulation.pesoAlvoKg.toFixed(1)} kg
                 </td>
-                <td className="p-2.5 text-right font-mono font-bold tabular-nums text-slate-800">
+                <td className="p-2.5 text-right font-mono font-bold tabular-nums text-slate-800 dark:text-slate-200">
                   {simulation.pesoDiferencaKg > 0 ? `-${simulation.pesoDiferencaKg.toFixed(1)}` : `+${Math.abs(simulation.pesoDiferencaKg).toFixed(1)}`} kg
                 </td>
               </tr>
 
               {simulation.imcAtual > 0 && (
-                <tr className="hover:bg-slate-50/50">
-                  <td className="p-2.5 font-medium text-slate-600">
+                <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                  <td className="p-2.5 font-medium text-slate-600 dark:text-slate-400">
                     Índice de Massa Corporal (IMC)
                   </td>
-                  <td className="p-2.5 text-right font-mono text-slate-700 tabular-nums">
+                  <td className="p-2.5 text-right font-mono text-slate-700 dark:text-slate-300 tabular-nums">
                     {simulation.imcAtual.toFixed(1)} kg/m²
                   </td>
-                  <td className="p-2.5 text-right font-mono font-semibold text-slate-900 tabular-nums bg-slate-50/50">
+                  <td className="p-2.5 text-right font-mono font-semibold text-slate-900 dark:text-white tabular-nums bg-slate-50/50 dark:bg-slate-800/50">
                     {simulation.imcAlvo.toFixed(1)} kg/m²
                   </td>
-                  <td className="p-2.5 text-right font-mono text-slate-600 tabular-nums">
+                  <td className="p-2.5 text-right font-mono text-slate-600 dark:text-slate-400 tabular-nums">
                     {(simulation.imcAlvo - simulation.imcAtual).toFixed(1)} kg/m²
                   </td>
                 </tr>
               )}
 
-              <tr className="hover:bg-slate-50/50">
-                <td className="p-2.5 font-medium text-slate-600">
+              <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                <td className="p-2.5 font-medium text-slate-600 dark:text-slate-400">
                   Classificação Normativa
                 </td>
-                <td className="p-2.5 text-right font-sans text-slate-700">
+                <td className="p-2.5 text-right font-sans text-slate-700 dark:text-slate-300">
                   {results.gorduraClassificacao}
                 </td>
-                <td className="p-2.5 text-right font-sans font-bold text-emerald-800 bg-emerald-50/30">
+                <td className="p-2.5 text-right font-sans font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-50/30 dark:bg-emerald-950/20">
                   {simulation.classificacaoAlvo}
                 </td>
-                <td className="p-2.5 text-right font-sans text-xs text-slate-400">
+                <td className="p-2.5 text-right font-sans text-xs text-slate-400 dark:text-slate-500">
                   Faixa: {results.faixaReferencia}
                 </td>
               </tr>
@@ -518,15 +526,15 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
         </div>
 
         {/* Coluna 3: Estimativa Temporal & Viabilidade Clínica */}
-        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between space-y-4">
+        <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Calendar className="w-4 h-4 text-slate-700" />
-              <h3 className="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+              <Calendar className="w-4 h-4 text-slate-700 dark:text-slate-300" />
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase font-mono tracking-wider">
                 Planejamento & Tempo de Tratamento
               </h3>
             </div>
-            <p className="text-[11px] text-slate-500 leading-relaxed">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
               Estimativas baseadas nas diretrizes do ACSM e ABESO para oxidação lipídica fisiológica sem catabolismo de massa magra.
             </p>
           </div>
@@ -534,65 +542,65 @@ export const GoalProjectionCard: React.FC<GoalProjectionCardProps> = ({
           {isPerda && simulation.semanasEstimadasSustentavel > 0 ? (
             <div className="space-y-3">
               {/* Ritmo Sustentável */}
-              <div className="p-3 bg-white border border-slate-200 rounded-xl">
+              <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] font-bold text-emerald-800">
+                  <span className="text-[11px] font-bold text-emerald-800 dark:text-emerald-300">
                     Ritmo Sustentável (~0,5 kg/sem)
                   </span>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold">
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 font-bold">
                     Recomendado
                   </span>
                 </div>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-xl font-bold font-mono text-slate-900">
+                  <span className="text-xl font-bold font-mono text-slate-900 dark:text-white">
                     {simulation.semanasEstimadasSustentavel}
                   </span>
-                  <span className="text-xs font-medium text-slate-500">semanas</span>
-                  <span className="text-xs font-medium text-slate-400">
+                  <span className="text-xs font-medium text-slate-500 dark:text-slate-400">semanas</span>
+                  <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
                     (~{simulation.mesesEstimadosSustentavel} meses)
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-400 mt-1 block">
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 block">
                   Máxima retenção muscular e menor efeito rebote.
                 </span>
               </div>
 
               {/* Ritmo Moderado */}
-              <div className="p-3 bg-white border border-slate-200 rounded-xl">
+              <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] font-semibold text-slate-700">
+                  <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
                     Ritmo Moderado (~0,75 kg/sem)
                   </span>
                 </div>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-lg font-bold font-mono text-slate-800">
+                  <span className="text-lg font-bold font-mono text-slate-800 dark:text-slate-200">
                     {simulation.semanasEstimadasModerado}
                   </span>
-                  <span className="text-xs font-medium text-slate-500">semanas</span>
-                  <span className="text-xs font-medium text-slate-400">
+                  <span className="text-xs font-medium text-slate-500 dark:text-slate-400">semanas</span>
+                  <span className="text-xs font-medium text-slate-400 dark:text-slate-500">
                     (~{simulation.mesesEstimadosModerado} meses)
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-400 mt-1 block">
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 block">
                   Exige aporte proteico e treino resistido rigorosos.
                 </span>
               </div>
             </div>
           ) : isGanho ? (
-            <div className="p-3 bg-white border border-slate-200 rounded-xl text-xs text-slate-600">
+            <div className="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-600 dark:text-slate-300">
               Objetivo de recuperação ou ganho ponderal. O planejamento nutricional deve focar em superávit calórico controlado associado a treinamento de hipertrofia.
             </div>
           ) : (
-            <div className="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl text-xs text-emerald-900">
+            <div className="p-3 bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 rounded-xl text-xs text-emerald-900 dark:text-emerald-200">
               O paciente já atinge exatamente o percentual alvo desejado ({targetFatInput.toFixed(1)}%). Manutenção isocalórica recomendada.
             </div>
           )}
 
-          <div className="pt-2 border-t border-slate-200/60 text-[10px] text-slate-400 leading-relaxed">
+          <div className="pt-2 border-t border-slate-200/60 dark:border-slate-700 text-[10px] text-slate-400 dark:text-slate-500 leading-relaxed">
             *Fórmula: Peso Alvo = MLG / (1 - %G Alvo / 100). Preservar 100% da massa magra requer ingesta proteica calculada (1,6 a 2,2 g/kg) e estímulo neuromuscular com treino resistido.
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

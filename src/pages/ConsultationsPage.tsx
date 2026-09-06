@@ -342,23 +342,23 @@ export const ConsultationsPage: React.FC = () => {
       {activeTab === 'lista' && (
         <div className="space-y-6">
           {/* Barra de Filtros & Ações Rápidas */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 shadow-2xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
               <div className="relative w-full sm:w-64">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Buscar por paciente ou queixa..."
-                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-hidden font-sans"
+                  className="w-full min-h-[44px] pl-10 pr-3 py-2 text-base sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-sans"
                 />
               </div>
 
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="px-2.5 py-1.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-bold focus:outline-hidden cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-3.5 py-2 text-base sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
               >
                 <option value="all">Todos os Status</option>
                 <option value="Concluído">Concluídos</option>
@@ -371,9 +371,9 @@ export const ConsultationsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab('novo_atendimento')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors cursor-pointer shadow-2xs"
+                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors cursor-pointer shadow-2xs"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-4 h-4" />
                 <span>Iniciar Novo Atendimento</span>
               </button>
             </div>
@@ -537,7 +537,7 @@ export const ConsultationsPage: React.FC = () => {
             </div>
 
             {/* Cabeçalho do Atendimento: Paciente, Tipo e Queixa */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Paciente
@@ -545,7 +545,7 @@ export const ConsultationsPage: React.FC = () => {
                 <select
                   value={newPatientName}
                   onChange={(e) => setNewPatientName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2 text-base sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
                 >
                   <option value="Camila Mendonça Ferreira">Camila Mendonça Ferreira (32 anos)</option>
                   <option value="Rodrigo Silveira da Rocha">Rodrigo Silveira da Rocha (34 anos)</option>
@@ -562,7 +562,7 @@ export const ConsultationsPage: React.FC = () => {
                 <select
                   value={newConsultType}
                   onChange={(e) => setNewConsultType(e.target.value as any)}
-                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2 text-base sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
                 >
                   <option value="Primeira Consulta">Primeira Consulta (Anamnese Completa)</option>
                   <option value="Consulta de Retorno">Consulta de Retorno (Evolução & Ajuste)</option>
@@ -570,7 +570,7 @@ export const ConsultationsPage: React.FC = () => {
                 </select>
               </div>
 
-              <div>
+              <div className="sm:col-span-2 lg:col-span-1">
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                   Queixa Principal / Motivo da Consulta
                 </label>
@@ -578,7 +578,7 @@ export const ConsultationsPage: React.FC = () => {
                   type="text"
                   value={newChiefComplaint}
                   onChange={(e) => setNewChiefComplaint(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-hidden"
+                  className="w-full min-h-[44px] px-3.5 py-2 text-base sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   placeholder="Ex.: Emagrecimento, melhora do sono e digestão..."
                 />
               </div>
@@ -601,10 +601,10 @@ export const ConsultationsPage: React.FC = () => {
                     <span className="text-[10px] text-slate-400">Sintomas e Rotina</span>
                   </div>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={soapS}
                     onChange={(e) => setSoapS(e.target.value)}
-                    className="w-full p-2.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-hidden resize-none font-sans"
+                    className="w-full p-3 text-base sm:text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none font-sans min-h-[100px]"
                     placeholder="Relato do paciente, percepção de fome, energia, adesão..."
                   />
                 </div>
@@ -618,10 +618,10 @@ export const ConsultationsPage: React.FC = () => {
                     <span className="text-[10px] text-slate-400">Medições e Biomarcadores</span>
                   </div>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={soapO}
                     onChange={(e) => setSoapO(e.target.value)}
-                    className="w-full p-2.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-hidden resize-none font-sans"
+                    className="w-full p-3 text-base sm:text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none font-sans min-h-[100px]"
                     placeholder="Peso, dobras cutâneas, % gordura, glicemia, HOMA-IR..."
                   />
                 </div>
@@ -635,10 +635,10 @@ export const ConsultationsPage: React.FC = () => {
                     <span className="text-[10px] text-slate-400">Interpretação Clínica</span>
                   </div>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={soapA}
                     onChange={(e) => setSoapA(e.target.value)}
-                    className="w-full p-2.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-hidden resize-none font-sans"
+                    className="w-full p-3 text-base sm:text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none font-sans min-h-[100px]"
                     placeholder="Diagnóstico nutricional conclusivo, evolução clínica..."
                   />
                 </div>
@@ -652,10 +652,10 @@ export const ConsultationsPage: React.FC = () => {
                     <span className="text-[10px] text-slate-400">Prescrição Terapêutica</span>
                   </div>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={soapP}
                     onChange={(e) => setSoapP(e.target.value)}
-                    className="w-full p-2.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-hidden resize-none font-sans"
+                    className="w-full p-3 text-base sm:text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none font-sans min-h-[100px]"
                     placeholder="Conduta calórica, micronutrientes, suplementos, orientações..."
                   />
                 </div>
@@ -738,21 +738,21 @@ export const ConsultationsPage: React.FC = () => {
                     Metas SMART para o Paciente (App)
                   </span>
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <input
                       type="text"
                       value={newGoalInput}
                       onChange={(e) => setNewGoalInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleAddGoal()}
                       placeholder="Adicionar nova meta clara e mensurável..."
-                      className="flex-1 px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-hidden"
+                      className="flex-1 min-h-[44px] px-3.5 py-2 text-base sm:text-xs rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     />
                     <button
                       type="button"
                       onClick={handleAddGoal}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold cursor-pointer"
+                      className="min-h-[44px] px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-colors shrink-0"
                     >
-                      Adicionar
+                      Adicionar Meta
                     </button>
                   </div>
 

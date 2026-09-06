@@ -61,12 +61,12 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Action buttons styled with Bento rounded pills */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 md:flex-wrap">
             <button
               id="btn-como-medir"
               type="button"
               onClick={onOpenGuide}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-full text-slate-200 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-3.5 py-1.5 text-xs font-medium rounded-full text-slate-200 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 transition-colors cursor-pointer shrink-0 active:scale-95"
               title="Guia prático de localização anatômica e técnica do adipômetro"
             >
               <HelpCircle className="w-3.5 h-3.5 text-sky-400" />
@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
               id="btn-historico-avaliacoes"
               type="button"
               onClick={onOpenHistory}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-full text-slate-200 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-3.5 py-1.5 text-xs font-medium rounded-full text-slate-200 bg-slate-800 hover:bg-slate-700/80 border border-slate-700 transition-colors cursor-pointer shrink-0 active:scale-95"
               title="Ver histórico de avaliações salvas"
             >
               <History className="w-3.5 h-3.5 text-slate-300" />
@@ -89,11 +89,11 @@ export const Header: React.FC<HeaderProps> = ({
                 id="btn-preenchimento-automatico"
                 type="button"
                 onClick={onOpenAutoFill}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full text-white bg-slate-800 hover:bg-slate-700/90 border border-sky-500/50 shadow-2xs hover:border-sky-400 transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-3.5 py-1.5 text-xs font-semibold rounded-full text-white bg-slate-800 hover:bg-slate-700/90 border border-sky-500/50 shadow-2xs hover:border-sky-400 transition-all cursor-pointer shrink-0 active:scale-95"
                 title="Importar dados de balança bioimpedância via Bluetooth ou arquivo de texto"
               >
                 <Bluetooth className="w-3.5 h-3.5 text-sky-400" />
-                <span>Preenchimento Automático</span>
+                <span>Preenchimento</span>
               </button>
             )}
 
@@ -101,28 +101,28 @@ export const Header: React.FC<HeaderProps> = ({
               id="btn-limpar-avaliacao"
               type="button"
               onClick={onResetForm}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full text-slate-400 hover:text-white hover:bg-slate-800/80 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-3 py-1.5 text-xs font-medium rounded-full text-slate-400 hover:text-white hover:bg-slate-800/80 border border-transparent hover:border-slate-700 transition-colors cursor-pointer shrink-0 active:scale-95"
               title="Redefinir campos"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Limpar</span>
+              <span>Limpar</span>
             </button>
 
             <button
               id="btn-nova-avaliacao"
               type="button"
               onClick={onNewEvaluation}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full text-slate-100 bg-slate-800 hover:bg-slate-700 border border-slate-700 shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-3.5 py-1.5 text-xs font-semibold rounded-full text-slate-100 bg-slate-800 hover:bg-slate-700 border border-slate-700 shadow-xs transition-all cursor-pointer shrink-0 active:scale-95"
             >
               <PlusCircle className="w-3.5 h-3.5 text-sky-400" />
-              <span>Nova Avaliação</span>
+              <span>Nova</span>
             </button>
 
             <button
               id="btn-salvar-avaliacao"
               type="button"
               onClick={onSaveEvaluation}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-full text-white bg-sky-700 hover:bg-sky-600 border border-sky-600 shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-4 py-1.5 text-xs font-semibold rounded-full text-white bg-sky-700 hover:bg-sky-600 border border-sky-600 shadow-xs transition-all cursor-pointer shrink-0 active:scale-95"
             >
               <Save className="w-3.5 h-3.5" />
               <span>Salvar</span>
@@ -132,14 +132,16 @@ export const Header: React.FC<HeaderProps> = ({
               id="btn-gerar-relatorio-pdf"
               type="button"
               onClick={onOpenReport}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold rounded-full text-slate-900 bg-sky-400 hover:bg-sky-300 shadow-xs transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] px-4 py-1.5 text-xs font-bold rounded-full text-slate-900 bg-sky-400 hover:bg-sky-300 shadow-xs transition-all cursor-pointer shrink-0 hover:scale-[1.02] active:scale-[0.98]"
               title="Gerar e imprimir laudo antropométrico em PDF"
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>Gerar Relatório PDF</span>
+              <span>PDF</span>
             </button>
 
-            <ThemeToggle size="sm" />
+            <div className="shrink-0">
+              <ThemeToggle size="sm" />
+            </div>
           </div>
         </div>
 

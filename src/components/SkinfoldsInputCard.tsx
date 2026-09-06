@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   Calculator,
   Check,
@@ -93,6 +94,16 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
   // Toggle whether to hide non-required fields or show all 9
   const [hideInactiveFolds, setHideInactiveFolds] = useState<boolean>(true);
 
+  // Quick entry mode (Tab / Enter auto-advance & local persistence)
+  const [quickEntryMode, setQuickEntryMode] = useState<boolean>(() => {
+    const saved = localStorage.getItem('nutri_saas_quick_entry');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('nutri_saas_quick_entry', JSON.stringify(quickEntryMode));
+  }, [quickEntryMode]);
+
   const normalizedSexo: Gender = sexo === 'feminino' ? 'feminino' : 'masculino';
 
   // Real-time validation map for all skinfold fields
@@ -133,6 +144,12 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
       }
     }
     setTrialFold(null);
+  };
+
+  const stepFold = (key: SkinfoldKey, delta: number) => {
+    const current = skinfoldValues[key] !== null && skinfoldValues[key] !== undefined ? Number(skinfoldValues[key]) : 0;
+    const nextVal = Math.max(0, Number((current + delta).toFixed(1)));
+    onChangeSkinfold(key, nextVal);
   };
 
   const filledCount = requiredFolds.filter(
@@ -213,14 +230,14 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 sm:flex-wrap max-w-full -mx-1 px-1">
           {onAnalyzeConsistency && (
             <button
               id="btn-analise-consistencia-ia"
               type="button"
               onClick={onAnalyzeConsistency}
               disabled={isAnalyzingConsistency}
-              className="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 text-amber-900 dark:text-amber-300 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/60 dark:hover:bg-amber-900/60 rounded-full border border-amber-200 dark:border-amber-800 font-semibold transition-all cursor-pointer shadow-2xs hover:shadow-xs disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 text-xs min-h-[40px] px-3.5 py-1.5 text-amber-900 dark:text-amber-300 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/60 dark:hover:bg-amber-900/60 rounded-full border border-amber-200 dark:border-amber-800 font-semibold transition-all cursor-pointer shadow-2xs hover:shadow-xs disabled:opacity-50 shrink-0"
               title="Analisar proporções anatômicas e coerência das dobras com Inteligência Artificial"
             >
               {isAnalyzingConsistency ? (
@@ -232,7 +249,7 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
               ) : (
                 <Stethoscope className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               )}
-              <span>Auditar Consistência (IA)</span>
+              <span>Auditar IA</span>
               {consistencyAuditScore !== null && consistencyAuditScore !== undefined && (
                 <span
                   className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full font-bold ml-0.5 ${
@@ -249,12 +266,27 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
             </button>
           )}
 
+          <button
+            id="btn-toggle-entrada-rapida"
+            type="button"
+            onClick={() => setQuickEntryMode(!quickEntryMode)}
+            className={`inline-flex items-center gap-1.5 text-xs min-h-[40px] px-3.5 py-1.5 rounded-full border font-medium transition-all cursor-pointer shrink-0 ${
+              quickEntryMode
+                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
+            }`}
+            title="Alternar Modo de Entrada Rápida (Pressione Enter para pular para o próximo campo)"
+          >
+            <Zap className={`w-3.5 h-3.5 ${quickEntryMode ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'}`} />
+            <span>Entrada Rápida: {quickEntryMode ? 'Ativa' : 'Desativada'}</span>
+          </button>
+
           {onFillSampleValues && (
             <button
               id="btn-preencher-exemplo"
               type="button"
               onClick={onFillSampleValues}
-              className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 rounded-full border border-sky-200 dark:border-sky-800 font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs min-h-[40px] px-3.5 py-1.5 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 rounded-full border border-sky-200 dark:border-sky-800 font-medium transition-colors cursor-pointer shrink-0"
               title="Preencher com valores normais para demonstração rápida"
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -263,7 +295,7 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
           )}
 
           <div
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold border ${
+            className={`inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold border shrink-0 ${
               integritySummary.hasErrors
                 ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800'
                 : isComplete
@@ -471,8 +503,13 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
           const isValidAndFilled = validation.status === 'valid';
 
           return (
-            <div
+            <motion.div
               key={key}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.22, delay: index * 0.03 }}
+              layout
               onClick={() => onSelectFold(key)}
               className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-2.5 ${
                 !isRequiredInCurrentProtocol
@@ -542,66 +579,114 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
                 </div>
 
                 {/* Right input, Dica Rápida, Média & Indicator */}
-                <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onSelectFold(key);
-                      if (onOpenQuickTip) onOpenQuickTip(key);
-                    }}
-                    className={`px-2.5 py-1.5 text-[11px] font-semibold rounded-full border transition-all flex items-center gap-1 cursor-pointer ${
-                      isSelected
-                        ? 'bg-amber-50 text-amber-900 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800 shadow-2xs'
-                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700'
-                    }`}
-                    title="Ver dica rápida com ilustração IA e diagrama de pinçamento"
-                  >
-                    <Sparkles className="w-3 h-3 text-amber-500" />
-                    <span>Dica</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openTrialModal(key);
-                    }}
-                    className="px-2.5 py-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
-                    title="Aferir 2 ou 3 vezes e calcular a média exata conforme ISAK"
-                  >
-                    Média 2-3x
-                  </button>
-
-                  <div className="relative w-28">
-                    <input
-                      id={`input-dobra-${key}`}
-                      type="number"
-                      step="0.1"
-                      min="0"
-                      max="900"
-                      placeholder="0.0"
-                      value={val !== undefined && val !== null ? val : ''}
-                      onFocus={() => onSelectFold(key)}
-                      onChange={(e) => {
-                        const v = e.target.value === '' ? null : parseFloat(e.target.value);
-                        onChangeSkinfold(key, v);
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-2 w-full sm:w-auto pt-2.5 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-slate-800/80">
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectFold(key);
+                        if (onOpenQuickTip) onOpenQuickTip(key);
                       }}
-                      className={`w-full pl-3 pr-9 py-2 text-base font-mono font-bold text-right rounded-xl border focus:outline-none transition-all ${
-                        isError
-                          ? 'border-rose-400 dark:border-rose-600 bg-rose-50/80 dark:bg-rose-950/60 text-rose-950 dark:text-rose-100 focus:ring-2 focus:ring-rose-500'
-                          : isWarning
-                          ? 'border-amber-400 dark:border-amber-600 bg-amber-50/60 dark:bg-amber-950/40 text-amber-950 dark:text-amber-100 focus:ring-2 focus:ring-amber-500'
-                          : !isRequiredInCurrentProtocol
-                          ? 'bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-500'
-                          : isFilled
-                          ? 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500'
-                          : 'bg-slate-50/70 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-500 focus:ring-2 focus:ring-sky-500'
+                      className={`min-h-[44px] sm:min-h-[36px] px-3 sm:px-2.5 py-2 sm:py-1 text-xs sm:text-[11px] font-semibold rounded-xl sm:rounded-full border transition-all flex items-center gap-1 cursor-pointer active:scale-95 ${
+                        isSelected
+                          ? 'bg-amber-50 text-amber-900 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800 shadow-2xs'
+                          : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700'
                       }`}
-                    />
-                    <span className="absolute right-2.5 top-2.5 text-xs font-mono font-semibold text-slate-400 pointer-events-none">
-                      mm
-                    </span>
+                      title="Ver dica rápida com ilustração IA e diagrama de pinçamento"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                      <span>Dica</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openTrialModal(key);
+                      }}
+                      className="min-h-[44px] sm:min-h-[36px] px-3 sm:px-2.5 py-2 sm:py-1 text-xs sm:text-[11px] font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl sm:rounded-full border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer active:scale-95"
+                      title="Aferir 2 ou 3 vezes e calcular a média exata conforme ISAK"
+                    >
+                      Média 2-3x
+                    </button>
+                  </div>
+
+                  {/* Input Group with Steppers & Unit */}
+                  <div className="flex items-center gap-1">
+                    {/* Decrement button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        stepFold(key, -0.5);
+                      }}
+                      className="min-h-[44px] w-9 sm:w-8 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 flex items-center justify-center font-mono font-bold text-sm select-none cursor-pointer"
+                      title="Diminuir 0.5 mm"
+                      aria-label={`Diminuir ${def.name} em 0.5 mm`}
+                    >
+                      -
+                    </button>
+
+                    <div className="relative w-28 sm:w-26">
+                      <input
+                        id={`input-dobra-${key}`}
+                        type="number"
+                        inputMode="decimal"
+                        step="0.1"
+                        min="0"
+                        max="900"
+                        placeholder="0.0"
+                        value={val !== undefined && val !== null ? val : ''}
+                        onFocus={() => onSelectFold(key)}
+                        onChange={(e) => {
+                          const v = e.target.value === '' ? null : parseFloat(e.target.value);
+                          onChangeSkinfold(key, v);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && quickEntryMode) {
+                            e.preventDefault();
+                            const currentIndex = foldsToDisplay.indexOf(key);
+                            if (currentIndex !== -1 && currentIndex < foldsToDisplay.length - 1) {
+                              const nextKey = foldsToDisplay[currentIndex + 1];
+                              const nextInput = document.getElementById(`input-dobra-${nextKey}`) as HTMLInputElement;
+                              if (nextInput) {
+                                nextInput.focus();
+                                nextInput.select();
+                              }
+                            }
+                          }
+                        }}
+                        className={`w-full min-h-[44px] pl-2.5 pr-8 py-2 text-base sm:text-sm font-mono font-bold text-right rounded-xl border focus:outline-none transition-all ${
+                          isError
+                            ? 'border-rose-400 dark:border-rose-600 bg-rose-50/80 dark:bg-rose-950/60 text-rose-950 dark:text-rose-100 focus:ring-2 focus:ring-rose-500'
+                            : isWarning
+                            ? 'border-amber-400 dark:border-amber-600 bg-amber-50/60 dark:bg-amber-950/40 text-amber-950 dark:text-amber-100 focus:ring-2 focus:ring-amber-500'
+                            : !isRequiredInCurrentProtocol
+                            ? 'bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-500'
+                            : isFilled
+                            ? 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500'
+                            : 'bg-slate-50/70 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-500 focus:ring-2 focus:ring-sky-500'
+                        }`}
+                      />
+                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-mono font-semibold text-slate-400 pointer-events-none">
+                        mm
+                      </span>
+                    </div>
+
+                    {/* Increment button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        stepFold(key, 0.5);
+                      }}
+                      className="min-h-[44px] w-9 sm:w-8 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 flex items-center justify-center font-mono font-bold text-sm select-none cursor-pointer"
+                      title="Aumentar 0.5 mm"
+                      aria-label={`Aumentar ${def.name} em 0.5 mm`}
+                    >
+                      +
+                    </button>
                   </div>
 
                   {/* Tooltip informativa da variação normal esperada (em mm) por sexo */}
@@ -678,7 +763,7 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
                   </div>
                 </div>
               )}
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -716,12 +801,12 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
 
       {/* Mini-Modal: 3-trial Average Calculator com Validação em Tempo Real (ISAK TEM) */}
       {trialFold && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 shadow-xl animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-xl animate-in fade-in zoom-in-95 my-auto">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Calculator className="w-4 h-4 text-sky-600" />
-                Cálculo de Média de Medição (ISAK TEM)
+                <Calculator className="w-4 h-4 text-sky-600 shrink-0" />
+                <span>Cálculo de Média (ISAK TEM)</span>
               </h3>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold">
                 {SKINFOLD_DEFINITIONS[trialFold].shortName}
@@ -733,64 +818,67 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
               O protocolo ISAK recomenda 2 tomadas não consecutivas e cálculo da média. Se a diferença for &gt; 5%, faça a 3ª tomada.
             </p>
 
-            <div className="grid grid-cols-3 gap-2.5 mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
               <div>
-                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
+                <label className="text-xs sm:text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
                   1ª Medida
                 </label>
                 <div className="relative">
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     min="1"
                     max="80"
                     autoFocus
-                    placeholder="mm"
+                    placeholder="0.0"
                     value={trial1}
                     onChange={(e) => setTrial1(e.target.value)}
-                    className="w-full pl-2 pr-7 py-2 text-base font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
+                    className="w-full min-h-[44px] pl-3 pr-8 py-2 text-base font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
                   />
-                  <span className="absolute right-2 top-2.5 text-[10px] font-mono text-slate-400 pointer-events-none">
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400 pointer-events-none">
                     mm
                   </span>
                 </div>
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
+                <label className="text-xs sm:text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
                   2ª Medida
                 </label>
                 <div className="relative">
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     min="1"
                     max="80"
-                    placeholder="mm"
+                    placeholder="0.0"
                     value={trial2}
                     onChange={(e) => setTrial2(e.target.value)}
-                    className="w-full pl-2 pr-7 py-2 text-base font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
+                    className="w-full min-h-[44px] pl-3 pr-8 py-2 text-base font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
                   />
-                  <span className="absolute right-2 top-2.5 text-[10px] font-mono text-slate-400 pointer-events-none">
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400 pointer-events-none">
                     mm
                   </span>
                 </div>
               </div>
               <div>
-                <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
+                <label className="text-xs sm:text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">
                   3ª Medida (opc.)
                 </label>
                 <div className="relative">
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     min="1"
                     max="80"
-                    placeholder="mm"
+                    placeholder="0.0"
                     value={trial3}
                     onChange={(e) => setTrial3(e.target.value)}
-                    className="w-full pl-2 pr-7 py-2 text-base font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
+                    className="w-full min-h-[44px] pl-3 pr-8 py-2 text-base font-mono font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white bg-white dark:bg-slate-800"
                   />
-                  <span className="absolute right-2 top-2.5 text-[10px] font-mono text-slate-400 pointer-events-none">
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono text-slate-400 pointer-events-none">
                     mm
                   </span>
                 </div>
@@ -837,11 +925,11 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
               </div>
             )}
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
               <button
                 type="button"
                 onClick={() => setTrialFold(null)}
-                className="px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl cursor-pointer text-center"
               >
                 Cancelar
               </button>
@@ -849,7 +937,7 @@ export const SkinfoldsInputCard: React.FC<SkinfoldsInputCardProps> = ({
                 type="button"
                 disabled={trialConsistency.hasErrors || trialConsistency.average === null}
                 onClick={applyTrialAverage}
-                className="px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded-xl shadow-xs transition-colors cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded-xl shadow-xs transition-colors cursor-pointer text-center"
               >
                 Aplicar Média {trialConsistency.average ? `(${trialConsistency.average} mm)` : ''}
               </button>

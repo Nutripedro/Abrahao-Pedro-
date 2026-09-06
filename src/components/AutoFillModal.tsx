@@ -407,25 +407,25 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95">
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
+        <div className="px-5 sm:px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-sky-600 text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-sky-600 text-white flex items-center justify-center shadow-xs shrink-0">
               <Bluetooth className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                  Preenchimento Automático de Medidas
+                  Preenchimento Automático
                 </h2>
                 <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 font-bold border border-sky-200 dark:border-sky-800">
                   Bluetooth & Arquivo
                 </span>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Importe dados de balança de bioimpedância, fita digital de perimetria ou arquivo TXT/CSV.
+                Importe dados de balança de bioimpedância, fita digital ou arquivo TXT/CSV.
               </p>
             </div>
           </div>
@@ -433,31 +433,32 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors cursor-pointer active:scale-95 shrink-0"
+            aria-label="Fechar modal"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="px-6 pt-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3 bg-white dark:bg-slate-900">
+        <div className="px-4 sm:px-6 pt-2 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto no-scrollbar bg-white dark:bg-slate-900">
           <button
             type="button"
             onClick={() => setActiveTab('bluetooth')}
-            className={`pb-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 cursor-pointer ${
+            className={`px-3.5 py-2.5 min-h-[44px] text-xs font-bold transition-all border-b-2 flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-95 shrink-0 ${
               activeTab === 'bluetooth'
                 ? 'border-sky-600 text-sky-600 dark:text-sky-400'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
             }`}
           >
             <Bluetooth className="w-4 h-4" />
-            <span>Dispositivo Bluetooth (Sensores / Balança)</span>
+            <span>Dispositivo Bluetooth (Balança / Sensores)</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('file')}
-            className={`pb-3 text-xs font-bold transition-all border-b-2 flex items-center gap-2 cursor-pointer ${
+            className={`px-3.5 py-2.5 min-h-[44px] text-xs font-bold transition-all border-b-2 flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-95 shrink-0 ${
               activeTab === 'file'
                 ? 'border-sky-600 text-sky-600 dark:text-sky-400'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
@@ -469,12 +470,12 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 text-xs">
           {/* TAB 1: BLUETOOTH */}
           {activeTab === 'bluetooth' && (
             <div className="space-y-4">
               {/* Bluetooth Connection Card */}
-              <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+              <div className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
@@ -500,16 +501,16 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                       type="button"
                       onClick={handleConnectBluetooth}
                       disabled={bluetoothStatus === 'searching' || bluetoothStatus === 'reading'}
-                      className="px-4 py-2.5 rounded-xl font-bold bg-sky-600 hover:bg-sky-500 text-white flex items-center gap-2 shadow-xs transition-all cursor-pointer disabled:opacity-50"
+                      className="w-full sm:w-auto px-4 py-2.5 min-h-[44px] rounded-xl font-bold bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer disabled:opacity-50 active:scale-95"
                     >
                       {bluetoothStatus === 'searching' || bluetoothStatus === 'reading' ? (
                         <>
-                          <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                          <RefreshCw className="w-4 h-4 animate-spin" />
                           <span>Buscando sensor...</span>
                         </>
                       ) : (
                         <>
-                          <Bluetooth className="w-3.5 h-3.5" />
+                          <Bluetooth className="w-4 h-4" />
                           <span>Buscar Dispositivo BT</span>
                         </>
                       )}
@@ -529,7 +530,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
               </div>
 
               {/* Simulation / Quick Testing Tools */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-4 h-4 text-sky-500" />
                   <strong className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
@@ -544,7 +545,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSimulateDevice('bioimpedance')}
-                    className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-sky-950/30 text-left transition-all cursor-pointer group"
+                    className="p-3.5 min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-sky-950/30 text-left transition-all cursor-pointer group active:scale-95"
                   >
                     <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white mb-1">
                       <Scale className="w-4 h-4 text-sky-600 group-hover:scale-110 transition-transform" />
@@ -558,7 +559,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSimulateDevice('smart_tape')}
-                    className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 text-left transition-all cursor-pointer group"
+                    className="p-3.5 min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 text-left transition-all cursor-pointer group active:scale-95"
                   >
                     <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white mb-1">
                       <Ruler className="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform" />
@@ -577,7 +578,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
           {activeTab === 'file' && (
             <div className="space-y-4">
               {/* File Drag & Drop + Upload button */}
-              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-4 text-center hover:border-sky-500 transition-colors bg-slate-50/50 dark:bg-slate-800/30 relative">
+              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-5 text-center hover:border-sky-500 transition-colors bg-slate-50/50 dark:bg-slate-800/30 relative">
                 <input
                   type="file"
                   accept=".txt,.csv,.tsv,.json"
@@ -597,7 +598,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
 
               {/* Text Area & Quick Presets */}
               <div>
-                <div className="flex items-center justify-between mb-1.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
                   <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
                     Ou cole o texto / relatório diretamente:
                   </label>
@@ -606,21 +607,21 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                     <button
                       type="button"
                       onClick={() => setTextInput(CLINICAL_IMPORT_EXAMPLES.bioimpedanceScale)}
-                      className="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 cursor-pointer"
+                      className="text-xs px-3 py-1.5 min-h-[36px] rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer active:scale-95 font-medium"
                     >
                       Balança
                     </button>
                     <button
                       type="button"
                       onClick={() => setTextInput(CLINICAL_IMPORT_EXAMPLES.digitalTape)}
-                      className="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 cursor-pointer"
+                      className="text-xs px-3 py-1.5 min-h-[36px] rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer active:scale-95 font-medium"
                     >
                       Fita
                     </button>
                     <button
                       type="button"
                       onClick={() => setTextInput(CLINICAL_IMPORT_EXAMPLES.integratedCsv)}
-                      className="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 cursor-pointer"
+                      className="text-xs px-3 py-1.5 min-h-[36px] rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 cursor-pointer active:scale-95 font-medium"
                     >
                       CSV
                     </button>
@@ -641,7 +642,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
           {/* PARSED DATA PREVIEW & DIFF SECTION (Persona 3 - Segurança e Consentimento) */}
           {reviewFields.length > 0 && (
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
                   <strong className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider font-sans">
@@ -649,11 +650,11 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                   </strong>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <button
                     type="button"
                     onClick={() => toggleAll(true)}
-                    className="text-[11px] text-sky-600 dark:text-sky-400 hover:underline cursor-pointer"
+                    className="text-xs text-sky-600 dark:text-sky-400 hover:underline cursor-pointer py-1 font-semibold"
                   >
                     Marcar todos
                   </button>
@@ -661,7 +662,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                   <button
                     type="button"
                     onClick={() => toggleAll(false)}
-                    className="text-[11px] text-slate-500 hover:underline cursor-pointer"
+                    className="text-xs text-slate-500 hover:underline cursor-pointer py-1 font-semibold"
                   >
                     Desmarcar
                   </button>
@@ -669,18 +670,18 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
               </div>
 
               {/* Diff Table */}
-              <div className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-                <table className="w-full text-left text-xs">
+              <div className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-x-auto no-scrollbar">
+                <table className="min-w-full text-left text-xs">
                   <thead className="bg-slate-100/70 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] uppercase tracking-wider font-mono">
                     <tr>
-                      <th className="py-2.5 px-3 w-10 text-center">Aplicar</th>
-                      <th className="py-2.5 px-3">Parâmetro</th>
-                      <th className="py-2.5 px-3 text-right">Valor Atual</th>
-                      <th className="py-2.5 px-3 text-right">Novo Importado</th>
-                      <th className="py-2.5 px-3 text-right">Variação (Δ)</th>
+                      <th className="py-2.5 px-3 w-12 text-center">Aplicar</th>
+                      <th className="py-2.5 px-3 whitespace-nowrap">Parâmetro</th>
+                      <th className="py-2.5 px-3 text-right whitespace-nowrap">Valor Atual</th>
+                      <th className="py-2.5 px-3 text-right whitespace-nowrap">Novo Importado</th>
+                      <th className="py-2.5 px-3 text-right whitespace-nowrap">Variação (Δ)</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 font-mono">
                     {reviewFields.map((field) => {
                       const isSelected = !!selectedFields[field.id];
                       const diff =
@@ -698,26 +699,26 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
                               : 'bg-white dark:bg-slate-900 opacity-60 hover:opacity-100'
                           }`}
                         >
-                          <td className="py-2 px-3 text-center" onClick={(e) => e.stopPropagation()}>
+                          <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()}>
                             <input
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => toggleField(field.id)}
-                              className="rounded border-slate-300 text-sky-600 focus:ring-sky-500 cursor-pointer"
+                              className="w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500 cursor-pointer"
                             />
                           </td>
-                          <td className="py-2 px-3 font-semibold text-slate-800 dark:text-slate-200">
+                          <td className="py-3 px-3 font-semibold text-slate-800 dark:text-slate-200 whitespace-nowrap font-sans">
                             {field.label}
                           </td>
-                          <td className="py-2 px-3 text-right font-mono text-slate-500">
+                          <td className="py-3 px-3 text-right text-slate-500 dark:text-slate-400 whitespace-nowrap">
                             {field.currentVal !== undefined && field.currentVal !== null
                               ? `${field.currentVal} ${field.unit}`
                               : '—'}
                           </td>
-                          <td className="py-2 px-3 text-right font-mono font-bold text-sky-700 dark:text-sky-400">
+                          <td className="py-3 px-3 text-right font-bold text-sky-700 dark:text-sky-400 whitespace-nowrap">
                             {field.newVal} {field.unit}
                           </td>
-                          <td className="py-2 px-3 text-right font-mono text-[11px]">
+                          <td className="py-3 px-3 text-right text-[11px] whitespace-nowrap">
                             {diff !== null ? (
                               <span
                                 className={`font-semibold ${
@@ -745,7 +746,7 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
 
           {/* Warnings if any */}
           {parsedData?.warnings && parsedData.warnings.length > 0 && (
-            <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-800 dark:text-amber-300 text-[11px] space-y-1">
+            <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-800 dark:text-amber-300 text-[11px] space-y-1">
               <strong className="font-semibold flex items-center gap-1.5">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 <span>Alertas de Segurança Clínica:</span>
@@ -760,8 +761,8 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="text-xs text-slate-500 dark:text-slate-400">
+        <div className="px-5 sm:px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
             {selectedCount > 0 ? (
               <span>
                 <strong className="text-slate-900 dark:text-white font-bold">{selectedCount}</strong>{' '}
@@ -772,11 +773,11 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
+              className="w-full sm:w-auto px-4 py-2.5 min-h-[44px] text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer active:scale-95 text-center"
             >
               Cancelar
             </button>
@@ -784,10 +785,10 @@ export const AutoFillModal: React.FC<AutoFillModalProps> = ({
               type="button"
               onClick={handleConfirmApply}
               disabled={selectedCount === 0}
-              className="px-5 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 rounded-xl shadow-xs transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+              className="w-full sm:w-auto px-5 py-2.5 min-h-[44px] text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 rounded-xl shadow-xs transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-95"
             >
               <Check className="w-4 h-4" />
-              <span>Aplicar Medidas Selecionadas ({selectedCount})</span>
+              <span>Aplicar Selecionadas ({selectedCount})</span>
             </button>
           </div>
         </div>

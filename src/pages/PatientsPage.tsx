@@ -74,7 +74,7 @@ export const PatientsPage: React.FC = () => {
   React.useEffect(() => {
     if (!isTrainingMode && user) {
       setLoading(true);
-      patientService.getAll()
+      patientService.getAll(user.id)
         .then(data => {
           const mapped: PatientItem[] = data.map(p => ({
             id: p.id,
@@ -95,7 +95,7 @@ export const PatientsPage: React.FC = () => {
         })
         .catch(err => {
           console.error('Error fetching patients:', err);
-          setError('Erro ao carregar pacientes do banco de dados.');
+          setError(err instanceof Error ? err.message : 'Erro ao carregar pacientes do banco de dados.');
         })
         .finally(() => setLoading(false));
     }
@@ -178,7 +178,7 @@ export const PatientsPage: React.FC = () => {
       setNewNome('');
     } catch (err) {
       console.error('Error creating patient:', err);
-      setError('Erro ao salvar novo paciente.');
+      setError(err instanceof Error ? err.message : 'Erro ao salvar novo paciente.');
     } finally {
       setLoading(false);
     }
@@ -460,17 +460,17 @@ export const PatientsPage: React.FC = () => {
 
       {/* Modal: Novo Paciente */}
       {isNewModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-4 animate-in fade-in zoom-in-95">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Plus className="w-5 h-5 text-sky-500" />
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-7 max-w-md w-full shadow-2xl space-y-4 animate-in fade-in zoom-in-95 my-auto">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Plus className="w-5 h-5 text-sky-500 shrink-0" />
               <span>Cadastrar Novo Paciente</span>
             </h2>
 
             <form onSubmit={handleAddPatient} className="space-y-3.5 text-xs">
               <div>
                 <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Nome Completo
+                  Nome Completo <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -478,20 +478,21 @@ export const PatientsPage: React.FC = () => {
                   value={newNome}
                   onChange={(e) => setNewNome(e.target.value)}
                   placeholder="Ex: Rodrigo Albuquerque"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                  className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Idade (anos)
                   </label>
                   <input
                     type="number"
+                    inputMode="numeric"
                     value={newIdade}
                     onChange={(e) => setNewIdade(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
                 <div>
@@ -501,7 +502,7 @@ export const PatientsPage: React.FC = () => {
                   <select
                     value={newSexo}
                     onChange={(e) => setNewSexo(e.target.value as 'M' | 'F')}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
                   >
                     <option value="F">Feminino</option>
                     <option value="M">Masculino</option>
@@ -509,17 +510,18 @@ export const PatientsPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Peso (kg)
                   </label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     value={newPeso}
                     onChange={(e) => setNewPeso(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
                 <div>
@@ -528,24 +530,25 @@ export const PatientsPage: React.FC = () => {
                   </label>
                   <input
                     type="number"
+                    inputMode="decimal"
                     value={newAltura}
                     onChange={(e) => setNewAltura(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2.5 pt-3">
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-3">
                 <button
                   type="button"
                   onClick={() => setIsNewModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold cursor-pointer"
+                  className="min-h-[44px] px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold cursor-pointer text-center hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold shadow-xs cursor-pointer"
+                  className="min-h-[44px] px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold shadow-xs cursor-pointer text-center"
                 >
                   Salvar Paciente
                 </button>

@@ -51,7 +51,7 @@ const RouteLoader = () => (
 import { useAuth } from './contexts/AuthContext';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth() as any;
+  const { user, loading } = useAuth();
   
   if (loading) return <RouteLoader />;
   if (!user) return <Navigate to="/login" replace />;

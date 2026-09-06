@@ -38,6 +38,7 @@ import {
 } from 'lucide-react';
 import { useAuth, ClinicalProfessional } from '../contexts/AuthContext';
 import { useTheme, PALETTE_OPTIONS, LightPaletteId } from '../contexts/ThemeContext';
+import { professionalService } from '../services/professionalService';
 import { useClinic } from '../contexts/ClinicContext';
 import { usePatientApp } from '../contexts/PatientAppContext';
 import { useCrm } from '../contexts/CrmContext';
@@ -52,6 +53,8 @@ export const AccountSettingsPage: React.FC = () => {
   const {
     user,
     setUser,
+    profile,
+    setProfile,
     allProfessionalFeaturesActive,
     setAllProfessionalFeaturesActive,
     activePrescriberType,
@@ -88,15 +91,15 @@ export const AccountSettingsPage: React.FC = () => {
   } = useMealPlan();
 
   // Local form state for user profile
-  const [profileName, setProfileName] = useState(user?.name || 'Dra. Vanessa Rios');
-  const [profileEmail, setProfileEmail] = useState(user?.email || 'vanessa.rios@clinica.com');
-  const [profileRole, setProfileRole] = useState(user?.role || 'Nutricionista');
-  const [councilType, setCouncilType] = useState<'CRN' | 'CRM' | 'CREF' | 'COREN' | 'CRP'>('CRN');
-  const [councilNumber, setCouncilNumber] = useState('14285');
-  const [councilState, setCouncilState] = useState('SP');
-  const [specialty, setSpecialty] = useState('Nutrição Clínica Funcional & Esportiva de Alto Rendimento');
+  const [profileName, setProfileName] = useState(profile?.name || 'Dra. Vanessa Rios');
+  const [profileEmail, setProfileEmail] = useState(profile?.email || 'vanessa.rios@clinica.com');
+  const [profileRole, setProfileRole] = useState(profile?.role || 'Nutricionista');
+  const [councilType, setCouncilType] = useState<'CRN' | 'CRM' | 'CREF' | 'COREN' | 'CRP'>((profile?.council_type as any) || 'CRN');
+  const [councilNumber, setCouncilNumber] = useState(profile?.council_number || '14285');
+  const [councilState, setCouncilState] = useState(profile?.council_state || 'SP');
+  const [specialty, setSpecialty] = useState(profile?.specialty || 'Nutrição Clínica Funcional & Esportiva de Alto Rendimento');
   const [phone, setPhone] = useState('(11) 98765-4321');
-  const [signatureText, setSignatureText] = useState('Dra. Vanessa Rios - CRN-3 14285 - Especialista em Nutrição Clínica');
+  const [signatureText, setSignatureText] = useState('Assinatura Padrão');
 
   // Clinical preferences
   const [defaultProtocol, setDefaultProtocol] = useState<'jp-7' | 'jp-3' | 'jp-4' | 'dw-4'>('jp-7');
@@ -110,13 +113,16 @@ export const AccountSettingsPage: React.FC = () => {
   const [isActivatingAll, setIsActivatingAll] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.councilInfo) {
-      const parts = user.councilInfo.split(' ');
-      if (parts.length >= 2) {
-        setCouncilNumber(parts[1] || '14285');
-      }
+    if (profile) {
+      setProfileName(profile.name);
+      setProfileEmail(profile.email);
+      setProfileRole(profile.role);
+      setCouncilType((profile.council_type as any) || 'CRN');
+      setCouncilNumber(profile.council_number);
+      setCouncilState(profile.council_state);
+      setSpecialty(profile.specialty);
     }
-  }, [user]);
+  }, [profile]);
 
   // Handle Master 1-Click Activation of ALL functions
   const handleActivateAllFunctions = () => {
@@ -163,21 +169,42 @@ export const AccountSettingsPage: React.FC = () => {
     }, 400);
   };
 
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (setUser) {
-      setUser({
-        id: user?.id || 'usr-1',
+    if (!user) return;
+
+    try {
+      const updatedProfile = await professionalService.upsert({
+        id: user.id,
         name: profileName,
         email: profileEmail,
-        role: profileRole as any,
-        status: 'online',
-        councilInfo: `${councilType}-${councilState} ${councilNumber}`
+        role: profileRole,
+        council_type: councilType,
+        council_number: councilNumber,
+        council_state: councilState,
+        specialty: specialty,
+        status: 'ativo',
+        prescriber_type: activePrescriberType
       });
-    }
 
-    setFeedbackMessage('✅ Perfil profissional e dados do conselho salvos com sucesso!');
-    setTimeout(() => setFeedbackMessage(null), 4000);
+      if (setProfile) setProfile(updatedProfile);
+      
+      if (setUser) {
+        setUser({
+          ...user,
+          name: profileName,
+          email: profileEmail,
+          role: profileRole as any,
+          councilInfo: `${councilType}-${councilState} ${councilNumber}`
+        });
+      }
+
+      setFeedbackMessage('✅ Perfil profissional e dados do conselho salvos com sucesso no banco de dados!');
+      setTimeout(() => setFeedbackMessage(null), 4000);
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      setFeedbackMessage('❌ Erro ao salvar dados no Supabase. Verifique sua conexão.');
+    }
   };
 
   // Modules Catalog for visual status

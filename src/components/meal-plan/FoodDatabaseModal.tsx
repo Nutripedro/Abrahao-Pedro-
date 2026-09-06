@@ -103,7 +103,7 @@ export const FoodDatabaseModal: React.FC<FoodDatabaseModalProps> = ({
               placeholder="Buscar por nome do alimento (ex: arroz integral, tilápia, aveia, whey, feijão)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-900 dark:text-white"
+              className="w-full min-h-[44px] pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-900 dark:text-white"
             />
           </div>
 
@@ -215,16 +215,17 @@ export const FoodDatabaseModal: React.FC<FoodDatabaseModalProps> = ({
                     </div>
 
                     {/* Quantity Selector & Macros */}
-                    <div className="flex flex-wrap items-center gap-3 self-end sm:self-center">
-                      <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/80 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
-                        <span className="text-xs text-slate-500">Qtd:</span>
+                    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 self-stretch sm:self-center justify-between sm:justify-end">
+                      <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800/80 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 min-h-[44px]">
+                        <span className="text-xs text-slate-500 font-bold">Qtd:</span>
                         <input
                           type="number"
+                          inputMode="decimal"
                           min="1"
                           max="2000"
                           value={currentG}
                           onChange={(e) => handleQuantityChange(food.id, Number(e.target.value))}
-                          className="w-16 px-1.5 py-0.5 text-xs font-mono font-bold text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                          className="w-16 px-2 py-1 text-sm font-mono font-bold text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
                         />
                         <span className="text-xs font-mono text-slate-500">g</span>
                       </div>
@@ -241,7 +242,7 @@ export const FoodDatabaseModal: React.FC<FoodDatabaseModalProps> = ({
 
                       <button
                         onClick={() => handleAdd(food)}
-                        className={`px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs ${
+                        className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer ${
                           isAdded
                             ? 'bg-emerald-600 text-white'
                             : 'bg-slate-900 dark:bg-emerald-600 hover:bg-slate-800 dark:hover:bg-emerald-500 text-white'
@@ -249,12 +250,12 @@ export const FoodDatabaseModal: React.FC<FoodDatabaseModalProps> = ({
                       >
                         {isAdded ? (
                           <>
-                            <Check className="w-3.5 h-3.5" />
+                            <Check className="w-4 h-4" />
                             Adicionado!
                           </>
                         ) : (
                           <>
-                            <Plus className="w-3.5 h-3.5" />
+                            <Plus className="w-4 h-4" />
                             Adicionar
                           </>
                         )}

@@ -437,7 +437,7 @@ export const MealPlansPage: React.FC = () => {
         {showAddMealForm && (
           <form
             onSubmit={handleCreateMeal}
-            className="bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 flex flex-wrap items-end gap-3 animate-in fade-in duration-200"
+            className="bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-end gap-3 animate-in fade-in duration-200"
           >
             <div className="flex-1 min-w-[200px]">
               <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
@@ -449,11 +449,11 @@ export const MealPlansPage: React.FC = () => {
                 value={newMealName}
                 onChange={(e) => setNewMealName(e.target.value)}
                 required
-                className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500"
+                className="w-full min-h-[44px] px-3.5 py-2 text-base sm:text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
             </div>
 
-            <div className="w-28">
+            <div className="w-full sm:w-32">
               <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
                 Horário:
               </label>
@@ -461,18 +461,18 @@ export const MealPlansPage: React.FC = () => {
                 type="time"
                 value={newMealTime}
                 onChange={(e) => setNewMealTime(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white"
+                className="w-full min-h-[44px] px-3.5 py-2 text-base sm:text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
-            <div className="w-20">
+            <div className="w-full sm:w-24">
               <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
                 Ícone:
               </label>
               <select
                 value={newMealIcon}
                 onChange={(e) => setNewMealIcon(e.target.value)}
-                className="w-full px-2 py-2 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="☀️">☀️</option>
                 <option value="🍎">🍎</option>
@@ -483,17 +483,17 @@ export const MealPlansPage: React.FC = () => {
               </select>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pt-1 sm:pt-0">
               <button
                 type="submit"
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs"
+                className="flex-1 sm:flex-initial min-h-[44px] px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer transition-colors"
               >
                 Salvar Refeição
               </button>
               <button
                 type="button"
                 onClick={() => setShowAddMealForm(false)}
-                className="px-3 py-2 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-xs rounded-xl"
+                className="min-h-[44px] px-4 py-2 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-xs rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
                 Cancelar
               </button>
@@ -592,18 +592,19 @@ export const MealPlansPage: React.FC = () => {
                         </div>
 
                         {/* Edit quantity, macros and substitutions */}
-                        <div className="flex items-center gap-3 self-end sm:self-center">
-                          <div className="flex items-center gap-1 bg-white dark:bg-slate-800 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
-                            <span className="text-[10px] text-slate-400">G:</span>
+                        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 self-stretch sm:self-center justify-between sm:justify-end">
+                          <div className="flex items-center gap-1.5 bg-white dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 min-h-[44px]">
+                            <span className="text-xs text-slate-400 font-bold">G:</span>
                             <input
                               type="number"
+                              inputMode="decimal"
                               min="1"
                               max="2000"
                               value={item.quantidadeGramas}
                               onChange={(e) => updateFoodQuantity(meal.id, item.id, Number(e.target.value))}
-                              className="w-14 text-xs font-mono font-bold text-center bg-transparent text-slate-900 dark:text-white focus:outline-none"
+                              className="w-16 text-sm font-mono font-bold text-center bg-transparent text-slate-900 dark:text-white focus:outline-none"
                             />
-                            <span className="text-[10px] font-mono text-slate-400">g</span>
+                            <span className="text-xs font-mono text-slate-400">g</span>
                           </div>
 
                           <div className="text-right font-mono text-xs">
@@ -620,9 +621,9 @@ export const MealPlansPage: React.FC = () => {
                             <button
                               onClick={() => handleOpenSubModal(meal.id, item)}
                               title="Ver opções de substituições equivalentes isocalóricas"
-                              className="px-2.5 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-[11px] font-semibold flex items-center gap-1 transition-colors"
+                              className="min-h-[44px] px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                             >
-                              <ArrowRightLeft className="w-3 h-3" />
+                              <ArrowRightLeft className="w-3.5 h-3.5" />
                               <span>Substitutos</span>
                             </button>
                           )}
@@ -630,9 +631,9 @@ export const MealPlansPage: React.FC = () => {
                           <button
                             onClick={() => removeFoodFromMeal(meal.id, item.id)}
                             title="Remover alimento"
-                            className="p-1.5 text-slate-400 hover:text-rose-500 transition-colors"
+                            className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>

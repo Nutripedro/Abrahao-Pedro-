@@ -1,18 +1,34 @@
-import { supabase } from './supabase';
+import { supabase, isSupabaseConfigured } from './supabase';
 import { Database } from '../types/supabase';
+
+const checkConfig = () => {
+  if (!isSupabaseConfigured) {
+    throw new Error('Configuração do Supabase pendente. Por favor, adicione as chaves VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY nas configurações do projeto.');
+  }
+};
 
 export type MealPlan = Database['public']['Tables']['meal_plans']['Row'];
 export type NewMealPlan = Database['public']['Tables']['meal_plans']['Insert'];
 
 export const dietService = {
-  async getAllByPatient(patientId: string) {
-    const { data, error } = await supabase
+  async getAllByPatient(patientId: string, professionalId?: string) {
+    checkConfig();
+    let query = supabase
       .from('meal_plans')
       .select('*')
       .eq('patient_id', patientId)
       .order('created_at', { ascending: false });
     
-    if (error) throw error;
+    if (professionalId) {
+      query = query.eq('professional_id', professionalId);
+    }
+    
+    const { data, error } = await query;
+    
+    if (error) {
+      if (error.code === 'PGRST205') return [];
+      throw error;
+    }
     return (data || []) as MealPlan[];
   },
 
@@ -23,7 +39,13 @@ export const dietService = {
       .select()
       .single();
     
-    if (error) throw error;
+    if (error) {
+      if (error.code === 'PGRST205') {
+        console.warn('Table "meal_plans" not found.');
+        return plan as unknown as MealPlan;
+      }
+      throw error;
+    }
     if (!data) throw new Error('Failed to create meal plan');
     return data as MealPlan;
   },
@@ -33,7 +55,10 @@ export const dietService = {
       .update({ is_active: isActive })
       .eq('id', id);
     
-    if (error) throw error;
+    if (error) {
+      if (error.code === 'PGRST205') return;
+      throw error;
+    }
   },
 
   async delete(id: string) {
@@ -42,6 +67,9 @@ export const dietService = {
       .delete()
       .eq('id', id);
     
-    if (error) throw error;
+    if (error) {
+      if (error.code === 'PGRST205') return;
+      throw error;
+    }
   }
 };

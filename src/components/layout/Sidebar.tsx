@@ -2,11 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, PanInfo } from 'motion/react';
 import { 
-  ChevronDown, ChevronRight, ChevronLeft, X, LogOut, Settings, UserCircle
+  ChevronDown, ChevronRight, ChevronLeft, X, LogOut, Settings, UserCircle, Zap,
+  CheckCircle2, Sparkles, ShieldCheck
 } from 'lucide-react';
 import clsx from 'clsx';
 import { navigationConfig, MenuItem, MenuGroup } from '../../config/navigation';
 import { useAuth } from '../../contexts/AuthContext';
+import { useClinic } from '../../contexts/ClinicContext';
+import { usePatientApp } from '../../contexts/PatientAppContext';
+import { useCrm } from '../../contexts/CrmContext';
+import { useMealPlan } from '../../contexts/MealPlanContext';
+import { activateAllExamFeatures } from '../../data/clinicalExamsData';
+import { activateAllReportsFeatures } from '../../data/reportsClinicalData';
+import { activateAllConsultationsFeatures } from '../../data/consultationsData';
+import { activateAllInventoryFeatures } from '../../data/productsInventoryData';
+import { activateAllFinancialFeatures } from '../../data/financialData';
 import { PWAInstallButton } from '../pwa/PWAInstallButton';
 import { PushNotificationToggle } from '../pwa/PushNotificationToggle';
 import { ThemeToggle } from '../ThemeToggle';
@@ -26,12 +36,91 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout, hasPermission } = useAuth();
+  const { user, logout, hasPermission, activateAllTeamFeatures, allProfessionalFeaturesActive, setAllProfessionalFeaturesActive } = useAuth();
+  const { activateAllUnitsFeatures } = useClinic();
+  const { activateAllFeatures: activateAllPatientAppFeatures } = usePatientApp();
+  const { activateAllCrmFeatures } = useCrm();
+  const { activateAllFeatures: activateAllMealPlanFeatures } = useMealPlan();
+
+  const [activationFeedback, setActivationFeedback] = useState(false);
   
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
     'principal': true,
     'clinico': true,
+    'gestao': true,
+    'admin': true,
   });
+
+  // Comprehensive master activation of all annex and clinical features
+  const handleActivateAllAnnexFunctions = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+
+    // 1. Auth & Clinical Team
+    activateAllTeamFeatures();
+    if (setAllProfessionalFeaturesActive) {
+      setAllProfessionalFeaturesActive(true);
+    }
+
+    // 2. Multi-Unit & Clinics (10/10)
+    if (activateAllUnitsFeatures) activateAllUnitsFeatures();
+
+    // 3. Patient App (10/10)
+    if (activateAllPatientAppFeatures) activateAllPatientAppFeatures();
+
+    // 4. CRM & WhatsApp Automations (10/10)
+    if (activateAllCrmFeatures) activateAllCrmFeatures();
+
+    // 5. Meal Plans & TACO Database (10/10)
+    if (activateAllMealPlanFeatures) activateAllMealPlanFeatures();
+
+    // 6. Clinical Exam Requisitions (9 Panels)
+    activateAllExamFeatures();
+
+    // 7. Clinical & Management Reports (10/10)
+    activateAllReportsFeatures();
+
+    // 8. Consultations & SOAP Records
+    activateAllConsultationsFeatures();
+
+    // 9. Products & Inventory
+    activateAllInventoryFeatures();
+
+    // 10. Financial DRE & Pix
+    activateAllFinancialFeatures();
+
+    // Expand all sidebar menus and submenus so every function is immediately visible
+    setExpandedMenus({
+      'principal': true,
+      'clinico': true,
+      'gestao': true,
+      'admin': true,
+      'aplicativo': true,
+      'clientes': true,
+      'agenda': true,
+      'atendimentos': true,
+      'calculadoras': true,
+      'nutricao': true,
+      'financeiro': true,
+      'relatorios': true,
+      'crm': true,
+      'configuracoes': true,
+    });
+
+    // Save global master activation flags to localStorage
+    try {
+      localStorage.setItem('nutri_saas_all_master_features_unlocked', 'true');
+      localStorage.setItem('nutri_saas_all_pro_features', 'true');
+    } catch {
+      // Ignore in strict storage environments
+    }
+
+    // Dispatch global event for live reactive UI updates across all open views
+    window.dispatchEvent(new CustomEvent('nutri-saas-all-features-activated'));
+
+    // Visual feedback indicator
+    setActivationFeedback(true);
+    setTimeout(() => setActivationFeedback(false), 3500);
+  };
 
   // Close mobile sidebar on route change
   useEffect(() => {
@@ -280,9 +369,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <div key={group.id} className="px-3">
                 {!isCollapsed && (
-                  <h3 className="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-500 font-mono">
-                    {group.label}
-                  </h3>
+                  <div className="flex items-center justify-between px-3 mb-2">
+                    <h3 className="text-[10px] font-bold uppercase tracking-[0.1em] text-slate-500 font-mono">
+                      {group.label}
+                    </h3>
+                    {group.id === 'gestao' && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          activateAllTeamFeatures();
+                        }}
+                        className="p-1 rounded-md hover:bg-slate-800 text-slate-500 hover:text-amber-400 transition-colors cursor-pointer group/zap"
+                        title="Ativar todas as funções profissionais"
+                      >
+                        <Zap className="w-3 h-3 group-hover/zap:fill-amber-400" />
+                      </button>
+                    )}
+                  </div>
                 )}
 
                 <ul className="space-y-1">
@@ -304,6 +407,55 @@ export const Sidebar: React.FC<SidebarProps> = ({
           
           <div className={clsx(isCollapsed ? "flex justify-center" : "px-1")}>
             <PWAInstallButton />
+          </div>
+
+          {/* Master 10/10 Activation Control for All Annex Functions */}
+          <div className="relative">
+            <button
+              id="btn-ativar-todas-funcoes-anexo"
+              type="button"
+              onClick={handleActivateAllAnnexFunctions}
+              className={clsx(
+                "w-full flex items-center gap-2.5 px-3 py-2.5 rounded-2xl transition-all text-xs font-bold cursor-pointer group shadow-sm border text-left",
+                allProfessionalFeaturesActive
+                  ? "bg-emerald-500/15 hover:bg-emerald-500/25 border-emerald-500/30 text-emerald-300"
+                  : "bg-amber-500/15 hover:bg-amber-500/25 border-amber-500/40 text-amber-300 animate-pulse",
+                isCollapsed && "justify-center px-2"
+              )}
+              title="Ativar e desbloquear todas as funções do anexo e módulos do sistema"
+            >
+              {activationFeedback ? (
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 animate-bounce" />
+              ) : (
+                <Zap className={clsx(
+                  "w-4 h-4 shrink-0 transition-transform group-hover:scale-110",
+                  allProfessionalFeaturesActive ? "fill-emerald-400 text-emerald-400" : "fill-amber-400 text-amber-400"
+                )} />
+              )}
+              
+              {!isCollapsed && (
+                <div className="flex-1 flex items-center justify-between min-w-0">
+                  <div className="min-w-0">
+                    <p className="leading-tight truncate font-bold">
+                      {activationFeedback 
+                        ? "10/10 Funções Ativadas!" 
+                        : allProfessionalFeaturesActive 
+                          ? "Todas as Funções Ativas" 
+                          : "Ativar Funções do Anexo"}
+                    </p>
+                    <span className="text-[10px] font-normal text-slate-400 block truncate">
+                      {allProfessionalFeaturesActive ? "100% dos módulos liberados" : "Clique para ativar todas"}
+                    </span>
+                  </div>
+                  <span className={clsx(
+                    "text-[10px] font-mono px-1.5 py-0.5 rounded font-extrabold shrink-0 ml-1.5",
+                    allProfessionalFeaturesActive ? "bg-emerald-500/25 text-emerald-300" : "bg-amber-500/25 text-amber-300"
+                  )}>
+                    10/10
+                  </span>
+                </div>
+              )}
+            </button>
           </div>
 
           <div className="flex items-center justify-between px-2 py-2 bg-slate-900 rounded-2xl border border-slate-800 gap-1.5 overflow-hidden">

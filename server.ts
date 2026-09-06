@@ -22,6 +22,12 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Log all requests for debugging
+  app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+    next();
+  });
+
   // API routes FIRST
   app.post("/api/generate-summary", async (req, res) => {
     try {
@@ -184,9 +190,14 @@ Determine o status ("consistente", "atencao" ou "inconsistente"), um overallScor
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const distPath = path.resolve(process.cwd(), 'dist');
     app.use(express.static(distPath));
+    
+    // SPA Fallback: serve index.html for all non-API GET requests
     app.get('*', (req, res) => {
+      if (req.path.startsWith('/api/')) {
+        return res.status(404).json({ error: "API endpoint not found" });
+      }
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }

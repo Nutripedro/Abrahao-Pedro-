@@ -46,28 +46,28 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
   };
 
   return (
-    <div id="card-informacoes-gerais" className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 transition-all">
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-100 shadow-2xs">
+    <div id="card-informacoes-gerais" className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-4 sm:p-6 transition-all">
+      <div className="flex items-center justify-between pb-3.5 sm:pb-4 mb-4 sm:mb-5 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl sm:rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-900 shadow-2xs shrink-0">
             <User className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-sm font-bold tracking-tight text-slate-900 uppercase font-sans">
+            <h2 className="text-xs sm:text-sm font-bold tracking-tight text-slate-900 dark:text-white uppercase font-sans">
               Informações Gerais do Avaliado
             </h2>
-            <span className="text-xs text-slate-500">Dados Antropométricos Básicos</span>
+            <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Dados Antropométricos Básicos</span>
           </div>
         </div>
-        <span className="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+        <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
           Paciente
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {/* Nome do Paciente */}
         <div className="sm:col-span-2">
-          <label htmlFor="input-nome-paciente" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-nome-paciente" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Nome Completo do Cliente / Paciente <span className="text-rose-500">*</span>
           </label>
           <input
@@ -76,24 +76,24 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
             value={patient.nome}
             onChange={(e) => onChange({ nome: e.target.value })}
             placeholder="Ex: João da Silva Santos"
-            className="w-full px-3.5 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-900 transition-all placeholder:text-slate-400"
+            className="w-full min-h-[44px] px-3.5 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white transition-all placeholder:text-slate-400"
           />
         </div>
 
         {/* Sexo Biológico */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Sexo Biológico <span className="text-rose-500">*</span>
           </label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2" role="group" aria-label="Seleção de sexo biológico">
             <button
               id="btn-sexo-masculino"
               type="button"
               onClick={() => onChange({ sexo: 'masculino' })}
-              className={`py-2 px-3 text-xs font-semibold rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+              className={`min-h-[44px] py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 ${
                 patient.sexo === 'masculino'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  ? 'bg-slate-900 text-white dark:bg-sky-600 border-slate-900 dark:border-sky-600 shadow-xs'
+                  : 'bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               <span>Masculino</span>
@@ -102,10 +102,10 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
               id="btn-sexo-feminino"
               type="button"
               onClick={() => onChange({ sexo: 'feminino' })}
-              className={`py-2 px-3 text-xs font-semibold rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+              className={`min-h-[44px] py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl border transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 ${
                 patient.sexo === 'feminino'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  ? 'bg-slate-900 text-white dark:bg-sky-600 border-slate-900 dark:border-sky-600 shadow-xs'
+                  : 'bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               <span>Feminino</span>
@@ -115,23 +115,24 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
 
         {/* Idade */}
         <div>
-          <label htmlFor="input-idade" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-idade" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Idade (anos) <span className="text-rose-500">*</span>
           </label>
           <input
             id="input-idade"
             type="number"
+            inputMode="numeric"
             min={10}
             max={100}
             value={patient.idade || ''}
             onChange={(e) => onChange({ idade: Number(e.target.value) || 0 })}
-            className="w-full px-3.5 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-900 font-mono"
+            className="w-full min-h-[44px] px-3.5 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white font-mono"
           />
         </div>
 
         {/* Data de Nascimento */}
         <div>
-          <label htmlFor="input-data-nascimento" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-data-nascimento" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Data de Nascimento
           </label>
           <div className="relative">
@@ -140,29 +141,30 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
               type="date"
               value={patient.dataNascimento || ''}
               onChange={(e) => handleBirthDateChange(e.target.value)}
-              className="w-full px-3.5 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-800"
+              className="w-full min-h-[44px] px-3.5 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-800 dark:text-slate-200"
             />
           </div>
         </div>
 
         {/* Peso Atual (kg) */}
         <div>
-          <label htmlFor="input-peso-atual" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-peso-atual" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Peso Atual (kg) <span className="text-rose-500">*</span>
           </label>
           <div className="relative">
             <input
               id="input-peso-atual"
               type="number"
+              inputMode="decimal"
               step="0.1"
               min={25}
               max={300}
               value={patient.peso || ''}
               onChange={(e) => onChange({ peso: parseFloat(e.target.value) || 0 })}
               placeholder="Ex: 72.5"
-              className="w-full pl-3.5 pr-9 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-900 font-mono"
+              className="w-full min-h-[44px] pl-3.5 pr-9 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white font-mono"
             />
-            <span className="absolute right-3.5 top-3 text-xs font-medium text-slate-500 pointer-events-none">
+            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-500 dark:text-slate-400 pointer-events-none">
               kg
             </span>
           </div>
@@ -170,22 +172,23 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
 
         {/* Altura (cm) */}
         <div>
-          <label htmlFor="input-altura" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-altura" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Altura (cm) <span className="text-rose-500">*</span>
           </label>
           <div className="relative">
             <input
               id="input-altura"
               type="number"
+              inputMode="decimal"
               step="0.5"
               min={100}
               max={250}
               value={patient.altura || ''}
               onChange={(e) => onChange({ altura: parseFloat(e.target.value) || 0 })}
               placeholder="Ex: 175"
-              className="w-full pl-3.5 pr-9 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-900 font-mono"
+              className="w-full min-h-[44px] pl-3.5 pr-9 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white font-mono"
             />
-            <span className="absolute right-3.5 top-3 text-xs font-medium text-slate-500 pointer-events-none">
+            <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-medium text-slate-500 dark:text-slate-400 pointer-events-none">
               cm
             </span>
           </div>
@@ -193,14 +196,14 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
 
         {/* Nível de Atividade Física */}
         <div>
-          <label htmlFor="select-nivel-atividade" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="select-nivel-atividade" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Nível de Atividade Física
           </label>
           <select
             id="select-nivel-atividade"
             value={patient.nivelAtividade}
             onChange={(e) => onChange({ nivelAtividade: e.target.value as ActivityLevel })}
-            className="w-full px-3.5 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-800"
+            className="w-full min-h-[44px] px-3.5 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-800 dark:text-slate-200 cursor-pointer"
           >
             <option value="sedentario">Sedentário (pouco ou nenhum exercício)</option>
             <option value="leve">Leve (exercício 1-3 dias/sem)</option>
@@ -212,7 +215,7 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
 
         {/* Avaliador / Profissional */}
         <div>
-          <label htmlFor="input-avaliador" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-avaliador" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Profissional Avaliador(a) / CRN
           </label>
           <input
@@ -221,13 +224,13 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
             value={patient.avaliador}
             onChange={(e) => onChange({ avaliador: e.target.value })}
             placeholder="Ex: Nutricionista João Silva - CRN 12345"
-            className="w-full px-3.5 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-900 placeholder:text-slate-400"
+            className="w-full min-h-[44px] px-3.5 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400"
           />
         </div>
 
         {/* Data da Avaliação */}
         <div>
-          <label htmlFor="input-data-avaliacao" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label htmlFor="input-data-avaliacao" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Data da Consulta / Avaliação
           </label>
           <input
@@ -235,32 +238,32 @@ export const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
             type="date"
             value={patient.dataAvaliacao}
             onChange={(e) => onChange({ dataAvaliacao: e.target.value })}
-            className="w-full px-3.5 py-2.5 text-sm bg-slate-50/70 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white text-slate-900 font-mono"
+            className="w-full min-h-[44px] px-3.5 py-2.5 text-base sm:text-sm bg-slate-50/70 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white dark:focus:bg-slate-800 text-slate-900 dark:text-white font-mono"
           />
         </div>
       </div>
 
       {/* Bento Inner Box: Cálculo Automático do IMC */}
-      <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-sky-50/50 p-4 rounded-2xl border border-sky-100">
+      <div className="mt-4 sm:mt-5 pt-3.5 sm:pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-sky-50/50 dark:bg-sky-950/30 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-sky-100 dark:border-sky-900/60">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-sky-100 text-sky-800 rounded-xl flex items-center justify-center">
+          <div className="w-8 h-8 bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-300 rounded-xl flex items-center justify-center shrink-0">
             <Scale className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-xs text-slate-600 block">Cálculo Automático de IMC:</span>
+            <span className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 block">Cálculo Automático de IMC:</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold font-mono text-slate-900 tabular-nums">
+              <span className="text-base sm:text-lg font-bold font-mono text-slate-900 dark:text-white tabular-nums">
                 {imc > 0 ? `${imc.toFixed(2)} kg/m²` : '—'}
               </span>
-              <span className="text-xs text-slate-500 font-mono">
+              <span className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono">
                 (Peso / Altura²)
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-600">Classificação:</span>
+        <div className="flex items-center gap-2 self-stretch sm:self-auto justify-between sm:justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-sky-200/50 dark:border-sky-800/50">
+          <span className="text-xs text-slate-600 dark:text-slate-400">Classificação:</span>
           <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getImcBadgeColor(imcClassificacao)}`}>
             {imcClassificacao}
           </span>

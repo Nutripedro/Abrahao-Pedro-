@@ -116,11 +116,11 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
       </div>
 
       {/* 2. Seleção de Abas */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800 gap-6">
+      <div className="flex flex-wrap sm:flex-nowrap border-b border-slate-200 dark:border-slate-800 gap-2 sm:gap-6 overflow-x-auto pb-1">
         <button
           type="button"
           onClick={() => setActiveCalc('tmb')}
-          className={`pb-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+          className={`min-h-[44px] px-2 pb-2 sm:pb-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeCalc === 'tmb'
               ? 'border-sky-500 text-sky-600 dark:text-sky-400'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
@@ -133,7 +133,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
         <button
           type="button"
           onClick={() => setActiveCalc('imc')}
-          className={`pb-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+          className={`min-h-[44px] px-2 pb-2 sm:pb-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeCalc === 'imc'
               ? 'border-sky-500 text-sky-600 dark:text-sky-400'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
@@ -146,7 +146,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
         <button
           type="button"
           onClick={() => setActiveCalc('macros')}
-          className={`pb-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+          className={`min-h-[44px] px-2 pb-2 sm:pb-3 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeCalc === 'macros'
               ? 'border-sky-500 text-sky-600 dark:text-sky-400'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
@@ -158,12 +158,12 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
       </div>
 
       {/* 3. Painel de Entradas Compartilhado */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         {/* Entradas (5 colunas) */}
-        <div className="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
+        <div className="lg:col-span-5 bg-white dark:bg-slate-900 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
           <h2 className="text-sm font-bold text-slate-900 dark:text-white">Dados do Paciente</h2>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
                 Sexo Biológico
@@ -171,7 +171,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
               <select
                 value={sexo}
                 onChange={(e) => setSexo(e.target.value as 'M' | 'F')}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
               >
                 <option value="F">Feminino</option>
                 <option value="M">Masculino</option>
@@ -184,24 +184,26 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
               </label>
               <input
                 type="number"
+                inputMode="numeric"
                 value={idade}
                 onChange={(e) => setIdade(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-200"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
                 Peso Corporal (kg)
               </label>
               <input
                 type="number"
+                inputMode="decimal"
                 step="0.1"
                 value={peso}
                 onChange={(e) => setPeso(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-200"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
@@ -211,9 +213,10 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
               </label>
               <input
                 type="number"
+                inputMode="decimal"
                 value={altura}
                 onChange={(e) => setAltura(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-200"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
           </div>
@@ -225,7 +228,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
             <select
               value={formula}
               onChange={(e) => setFormula(e.target.value as 'mifflin' | 'harris')}
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200"
+              className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
             >
               <option value="mifflin">Mifflin-St Jeor (Padrão Ouro Atual)</option>
               <option value="harris">Harris-Benedict (Revisada 1984)</option>
@@ -239,7 +242,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
             <select
               value={fatorAtividade}
               onChange={(e) => setFatorAtividade(Number(e.target.value))}
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200"
+              className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
             >
               <option value="1.2">Sedentário (pouco ou nenhum exercício) • 1.20</option>
               <option value="1.375">Leve (exercício 1 a 3 dias/sem) • 1.375</option>
@@ -256,7 +259,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
             <select
               value={objetivo}
               onChange={(e) => setObjetivo(e.target.value as any)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200"
+              className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base sm:text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
             >
               <option value="emagrecimento">Emagrecimento (Déficit Calórico ~400 kcal)</option>
               <option value="manutencao">Manutenção do Peso Atual</option>
@@ -267,20 +270,20 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
 
         {/* Resultados Calculados (7 colunas) */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-5 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
+            <div className="p-4 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs">
               <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">TMB (Basal)</span>
               <span className="text-2xl font-bold font-mono text-sky-600 dark:text-sky-400">{tmb}</span>
               <span className="text-xs text-slate-400 block mt-0.5">kcal / dia</span>
             </div>
 
-            <div className="p-5 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs">
+            <div className="p-4 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs">
               <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">GET (Gasto Total)</span>
               <span className="text-2xl font-bold font-mono text-amber-500">{get}</span>
               <span className="text-xs text-slate-400 block mt-0.5">kcal / dia</span>
             </div>
 
-            <div className="p-5 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs">
+            <div className="p-4 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs">
               <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold block">Prescrição Alvo</span>
               <span className="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400">{caloriasAlvo}</span>
               <span className="text-xs text-slate-400 block mt-0.5">kcal / dia</span>
@@ -288,7 +291,7 @@ export const ClinicalCalculatorsPage: React.FC<{ initialTab?: 'tmb' | 'imc' | 'm
           </div>
 
           {/* Card Detalhado de Macronutrientes */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
+          <div className="bg-white dark:bg-slate-900 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center justify-between">
               <span>Distribuição Sugerida de Macronutrientes</span>
               <span className="text-xs font-mono text-slate-400">{caloriasAlvo} kcal total</span>
