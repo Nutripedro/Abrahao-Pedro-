@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="pwa-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C2B21" />
+      <stop offset="50%" stop-color="#2A6B46" />
+      <stop offset="100%" stop-color="#3C8D5E" />
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4E9F3D" />
+      <stop offset="100%" stop-color="#82CD47" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background Rounded Canvas -->
+  <rect width="512" height="512" rx="112" fill="url(#pwa-grad)" />
+
+  <!-- Inner Subtle Shield / Border Glow -->
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="none" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="4" />
+
+  <!-- Main Clinical Nutrition Symbol (Cross + Leaf + Caliper Geometry) -->
+  <g filter="url(#shadow)" transform="translate(0, 0)">
+    <!-- Stylized Medical Cross with Smooth Organic Contours -->
+    <rect x="226" y="112" width="60" height="288" rx="30" fill="#FFFFFF" />
+    <rect x="112" y="226" width="288" height="60" rx="30" fill="#FFFFFF" />
+
+    <!-- Organic Nutrition Leaf overlay -->
+    <path d="M256 120 C 340 120, 390 190, 390 280 C 390 350, 330 390, 256 390 C 256 320, 310 270, 310 220 C 310 180, 280 150, 256 120 Z" fill="url(#accent-grad)" fill-opacity="0.92" />
+    
+    <!-- Pulse Line / Metabolic Energy Indicator -->
+    <path d="M156 256 L 206 256 L 230 200 L 260 300 L 286 230 L 306 256 L 356 256" fill="none" stroke="#1C2B21" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Central Core Point -->
+    <circle cx="256" cy="256" r="14" fill="#4E9F3D" />
+  </g>
+
+  <!-- Small Aesthetic Text for App Launcher Branding -->
+  <text x="256" y="440" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="800" fill="#FFFFFF" fill-opacity="0.9" text-anchor="middle" letter-spacing="4">NUTRI SAAS</text>
+</svg>

@@ -1,0 +1,574 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --color-bg-canvas: #f8fafc;
+    --color-bg-card: #ffffff;
+    --color-bg-subtle: #f1f5f9;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-border-subtle: #f1f5f9;
+    --color-primary: #0284c7;
+  }
+
+  .dark {
+    --color-bg-canvas: #090d16;
+    --color-bg-card: #111827;
+    --color-bg-subtle: #1a2234;
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #94a3b8;
+    --color-border: #1f293d;
+    --color-border-subtle: #162032;
+    --color-primary: #38bdf8;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--color-bg-canvas);
+    color: var(--color-text-primary);
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* Ensure numbers have tabular alignment */
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-serif {
+    font-family: 'Source Serif 4', Georgia, serif;
+  }
+}
+
+/* ==========================================================================
+   CLINICAL LIGHT PALETTES (GREEN BALANCE, FRESH MINT & SALMON, MINIMALIST OAT)
+   Modern clinical guidelines:
+   - Bordas: 1px solid em tons suaves (#EAEFEA, #E2E8F0, #EAE4DC)
+   - Sombras (Shadows): Muito sutis (0 4px 6px -1px rgba(0,0,0,0.05))
+   - Tipografia: Sem serifa limpa (Plus Jakarta Sans)
+   - Raio de Borda: 12px a 16px em cards e botões
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   OPÇÃO 1: "Green Balance" (O Clássico Renovado)
+   Fundo: #F8FAF6 | Cards: #FFFFFF | Accent: #2A6B46 | Texto: #1C2B21 | Sucesso: #4E9F3D
+   -------------------------------------------------------------------------- */
+html[data-palette="green-balance"]:not(.dark) {
+  --color-bg-canvas: #F8FAF6;
+  --color-bg-card: #FFFFFF;
+  --color-bg-subtle: #F0F5EE;
+  --color-text-primary: #1C2B21;
+  --color-text-secondary: #3D5346;
+  --color-text-muted: #667F70;
+  --color-border: #EAEFEA;
+  --color-border-subtle: #F2F7F0;
+  --color-primary: #2A6B46;
+  --color-accent: #2A6B46;
+  --color-support-success: #4E9F3D;
+  --theme-shadow-subtle: 0 4px 6px -1px rgba(28, 43, 33, 0.05);
+}
+
+html[data-palette="green-balance"]:not(.dark) body {
+  background-color: #F8FAF6 !important;
+  color: #1C2B21 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .bg-slate-50,
+html[data-palette="green-balance"]:not(.dark) .bg-slate-50\/50,
+html[data-palette="green-balance"]:not(.dark) .bg-slate-50\/70,
+html[data-palette="green-balance"]:not(.dark) .bg-slate-50\/80,
+html[data-palette="green-balance"]:not(.dark) .bg-slate-50\/90 {
+  background-color: #F8FAF6 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .bg-white {
+  background-color: #FFFFFF !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .bg-slate-100 {
+  background-color: #F0F5EE !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .border-slate-200,
+html[data-palette="green-balance"]:not(.dark) .border-slate-200\/80,
+html[data-palette="green-balance"]:not(.dark) .border-slate-200\/90,
+html[data-palette="green-balance"]:not(.dark) .border-slate-100 {
+  border-color: #EAEFEA !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .text-slate-900,
+html[data-palette="green-balance"]:not(.dark) .text-slate-800 {
+  color: #1C2B21 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .text-slate-700 {
+  color: #2E4537 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .text-slate-600 {
+  color: #4A6354 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .text-slate-500 {
+  color: #6E8779 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .shadow-2xs,
+html[data-palette="green-balance"]:not(.dark) .shadow-xs,
+html[data-palette="green-balance"]:not(.dark) .shadow-sm,
+html[data-palette="green-balance"]:not(.dark) .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(28, 43, 33, 0.05) !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .palette-accent-btn,
+html[data-palette="green-balance"]:not(.dark) .bg-sky-500,
+html[data-palette="green-balance"]:not(.dark) .bg-sky-600 {
+  background-color: #2A6B46 !important;
+  color: #FFFFFF !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .hover\:bg-sky-400:hover,
+html[data-palette="green-balance"]:not(.dark) .hover\:bg-sky-500:hover {
+  background-color: #205436 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .text-sky-600,
+html[data-palette="green-balance"]:not(.dark) .text-sky-500 {
+  color: #2A6B46 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .bg-sky-50,
+html[data-palette="green-balance"]:not(.dark) .bg-sky-100 {
+  background-color: #EAF3ED !important;
+  color: #2A6B46 !important;
+}
+
+html[data-palette="green-balance"]:not(.dark) .border-sky-200,
+html[data-palette="green-balance"]:not(.dark) .border-sky-300 {
+  border-color: #D3E7DA !important;
+}
+
+/* --------------------------------------------------------------------------
+   OPÇÃO 2: "Fresh Mint & Salmon" (Moderno e Dinâmico)
+   Fundo: #F4F7F6 | Cards: #FFFFFF | Accent: #0E8388 | Secundários: #FFE9E4 (#E07A5F) | Texto: #2C3E50
+   -------------------------------------------------------------------------- */
+html[data-palette="fresh-mint"]:not(.dark) {
+  --color-bg-canvas: #F4F7F6;
+  --color-bg-card: #FFFFFF;
+  --color-bg-subtle: #EAF0EE;
+  --color-text-primary: #2C3E50;
+  --color-text-secondary: #485E73;
+  --color-text-muted: #6F869A;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #EBF1F0;
+  --color-primary: #0E8388;
+  --color-accent: #0E8388;
+  --color-support-success: #0E8388;
+  --color-secondary-bg: #FFE9E4;
+  --color-secondary-text: #E07A5F;
+  --theme-shadow-subtle: 0 4px 6px -1px rgba(14, 131, 136, 0.05);
+}
+
+html[data-palette="fresh-mint"]:not(.dark) body {
+  background-color: #F4F7F6 !important;
+  color: #2C3E50 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .bg-slate-50,
+html[data-palette="fresh-mint"]:not(.dark) .bg-slate-50\/50,
+html[data-palette="fresh-mint"]:not(.dark) .bg-slate-50\/70,
+html[data-palette="fresh-mint"]:not(.dark) .bg-slate-50\/80,
+html[data-palette="fresh-mint"]:not(.dark) .bg-slate-50\/90 {
+  background-color: #F4F7F6 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .bg-white {
+  background-color: #FFFFFF !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .bg-slate-100 {
+  background-color: #EAF0EE !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .border-slate-200,
+html[data-palette="fresh-mint"]:not(.dark) .border-slate-200\/80,
+html[data-palette="fresh-mint"]:not(.dark) .border-slate-200\/90,
+html[data-palette="fresh-mint"]:not(.dark) .border-slate-100 {
+  border-color: #E2E8F0 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .text-slate-900,
+html[data-palette="fresh-mint"]:not(.dark) .text-slate-800 {
+  color: #2C3E50 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .text-slate-700 {
+  color: #394F66 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .text-slate-600 {
+  color: #4F677F !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .text-slate-500 {
+  color: #71879B !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .shadow-2xs,
+html[data-palette="fresh-mint"]:not(.dark) .shadow-xs,
+html[data-palette="fresh-mint"]:not(.dark) .shadow-sm,
+html[data-palette="fresh-mint"]:not(.dark) .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(14, 131, 136, 0.05) !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .palette-accent-btn,
+html[data-palette="fresh-mint"]:not(.dark) .bg-sky-500,
+html[data-palette="fresh-mint"]:not(.dark) .bg-sky-600 {
+  background-color: #0E8388 !important;
+  color: #FFFFFF !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .hover\:bg-sky-400:hover,
+html[data-palette="fresh-mint"]:not(.dark) .hover\:bg-sky-500:hover {
+  background-color: #0B6D71 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .text-sky-600,
+html[data-palette="fresh-mint"]:not(.dark) .text-sky-500 {
+  color: #0E8388 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .bg-sky-50,
+html[data-palette="fresh-mint"]:not(.dark) .bg-sky-100 {
+  background-color: #E2F5F5 !important;
+  color: #0E8388 !important;
+}
+
+html[data-palette="fresh-mint"]:not(.dark) .border-sky-200,
+html[data-palette="fresh-mint"]:not(.dark) .border-sky-300 {
+  border-color: #C3E9E9 !important;
+}
+
+/* Secondary highlight elements (Salmão/Coral) */
+html[data-palette="fresh-mint"]:not(.dark) .palette-secondary-highlight,
+html[data-palette="fresh-mint"]:not(.dark) .badge-salmon {
+  background-color: #FFE9E4 !important;
+  color: #E07A5F !important;
+  border-color: #FFD4CC !important;
+}
+
+/* --------------------------------------------------------------------------
+   OPÇÃO 3: "Minimalist Oat" (Comportamental e Premium)
+   Fundo: #FAF8F5 | Cards: #FFFFFF | Accent: #8C7863 | Secundários: #E6F0FA (#2B6CB0) | Texto: #332C26
+   -------------------------------------------------------------------------- */
+html[data-palette="minimalist-oat"]:not(.dark) {
+  --color-bg-canvas: #FAF8F5;
+  --color-bg-card: #FFFFFF;
+  --color-bg-subtle: #F3EFE9;
+  --color-text-primary: #332C26;
+  --color-text-secondary: #584E44;
+  --color-text-muted: #877C72;
+  --color-border: #EAE4DC;
+  --color-border-subtle: #F4EFEA;
+  --color-primary: #8C7863;
+  --color-accent: #8C7863;
+  --color-support-success: #5B8C5A;
+  --color-secondary-bg: #E6F0FA;
+  --color-secondary-text: #2B6CB0;
+  --theme-shadow-subtle: 0 4px 6px -1px rgba(51, 44, 38, 0.05);
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) body {
+  background-color: #FAF8F5 !important;
+  color: #332C26 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .bg-slate-50,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-slate-50\/50,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-slate-50\/70,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-slate-50\/80,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-slate-50\/90 {
+  background-color: #FAF8F5 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .bg-white {
+  background-color: #FFFFFF !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .bg-slate-100 {
+  background-color: #F3EFE9 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .border-slate-200,
+html[data-palette="minimalist-oat"]:not(.dark) .border-slate-200\/80,
+html[data-palette="minimalist-oat"]:not(.dark) .border-slate-200\/90,
+html[data-palette="minimalist-oat"]:not(.dark) .border-slate-100 {
+  border-color: #EAE4DC !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .text-slate-900,
+html[data-palette="minimalist-oat"]:not(.dark) .text-slate-800 {
+  color: #332C26 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .text-slate-700 {
+  color: #4D423A !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .text-slate-600 {
+  color: #665A50 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .text-slate-500 {
+  color: #8E8378 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .shadow-2xs,
+html[data-palette="minimalist-oat"]:not(.dark) .shadow-xs,
+html[data-palette="minimalist-oat"]:not(.dark) .shadow-sm,
+html[data-palette="minimalist-oat"]:not(.dark) .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(51, 44, 38, 0.05) !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .palette-accent-btn,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-sky-500,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-sky-600 {
+  background-color: #8C7863 !important;
+  color: #FFFFFF !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .hover\:bg-sky-400:hover,
+html[data-palette="minimalist-oat"]:not(.dark) .hover\:bg-sky-500:hover {
+  background-color: #73614F !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .text-sky-600,
+html[data-palette="minimalist-oat"]:not(.dark) .text-sky-500 {
+  color: #8C7863 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .bg-sky-50,
+html[data-palette="minimalist-oat"]:not(.dark) .bg-sky-100 {
+  background-color: #F5EEE6 !important;
+  color: #8C7863 !important;
+}
+
+html[data-palette="minimalist-oat"]:not(.dark) .border-sky-200,
+html[data-palette="minimalist-oat"]:not(.dark) .border-sky-300 {
+  border-color: #E8DDCE !important;
+}
+
+/* Secondary highlight elements (Azul Sereno) */
+html[data-palette="minimalist-oat"]:not(.dark) .palette-secondary-highlight,
+html[data-palette="minimalist-oat"]:not(.dark) .badge-serene-blue {
+  background-color: #E6F0FA !important;
+  color: #2B6CB0 !important;
+  border-color: #D3E5F7 !important;
+}
+
+/* ==========================================================================
+   ERGONOMIC CLINICAL NIGHT MODE (DARK MODE) OVERRIDES
+   Designed specifically for clinical consultório night shifts:
+   - Soft deep slate-blue background to minimize eye fatigue
+   - High legibility WCAG AA compliant text contrast
+   - Calibrated form control colors avoiding bright white flares
+   ========================================================================== */
+
+.dark .bg-white {
+  background-color: #111827 !important;
+}
+
+.dark .bg-slate-100 {
+  background-color: #0b1120 !important;
+}
+
+.dark .bg-slate-50,
+.dark .bg-slate-50\/50,
+.dark .bg-slate-50\/70,
+.dark .bg-slate-50\/80 {
+  background-color: #151e2e !important;
+}
+
+.dark .border-slate-200,
+.dark .border-slate-200\/90,
+.dark .border-slate-200\/80,
+.dark .border-slate-100 {
+  border-color: #1f293d !important;
+}
+
+.dark .text-slate-900,
+.dark .text-slate-800 {
+  color: #f8fafc !important;
+}
+
+.dark .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+.dark .text-slate-600,
+.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+.dark input[type="text"],
+.dark input[type="number"],
+.dark input[type="date"],
+.dark select,
+.dark textarea {
+  background-color: #172033 !important;
+  color: #f8fafc !important;
+  border-color: #27354d !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  background-color: #1e293b !important;
+  border-color: #38bdf8 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* ==========================================================================
+   DEDICATED PRINT STYLESHEET FOR PROFESSIONAL MEDICAL REPORTS (PDF EXPORT)
+   - Completely removes navigation, sidebars, buttons, toolbars and modals
+   - Standardizes on A4 portrait dimensions with crisp typography
+   - Enforces pure white backgrounds and high-contrast clinical black text
+   - Formats tables, TMB and body composition cleanly without mid-card page cutoffs
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm 12mm 12mm;
+  }
+
+  /* Reset document for pure paper printing */
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Completely conceal non-report interface elements */
+  header,
+  footer,
+  aside,
+  nav,
+  button,
+  #theme-toggle-btn,
+  #btn-como-medir,
+  #btn-historico-avaliacoes,
+  #btn-limpar-avaliacao,
+  #btn-nova-avaliacao,
+  #btn-salvar-avaliacao,
+  #btn-gerar-relatorio-pdf,
+  #btn-gerar-relatorio-pdf-header,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Unconstrain fixed modal containers */
+  .fixed.inset-0,
+  div[role="dialog"] {
+    position: static !important;
+    overflow: visible !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Printable Report Document */
+  #printable-report {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Ensure color accuracy on modern browsers */
+  #printable-report * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Reset dark mode overrides when printing so paper is always clean white */
+  #printable-report .bg-white,
+  #printable-report .bg-slate-900,
+  #printable-report .bg-slate-50,
+  #printable-report .bg-slate-50\/50,
+  #printable-report .bg-slate-50\/70,
+  #printable-report .bg-slate-50\/80,
+  #printable-report .bg-slate-100 {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  #printable-report .report-header-badge {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+  }
+
+  #printable-report .report-metric-card {
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  #printable-report .text-slate-900,
+  #printable-report .text-slate-800,
+  #printable-report .text-slate-700,
+  #printable-report .text-white {
+    color: #0f172a !important;
+  }
+
+  #printable-report .border,
+  #printable-report .border-t,
+  #printable-report .border-b,
+  #printable-report .border-slate-200,
+  #printable-report .border-slate-200\/90,
+  #printable-report .border-slate-200\/80 {
+    border-color: #cbd5e1 !important;
+  }
+
+  /* Prevent awkward page break splits */
+  .page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Remix Calculadora de Gordura por Dobras",
+  "description": "Calculadora clínica de composição corporal por dobras cutâneas, aplicativo do paciente, planos alimentares com Tabela TACO/IBGE, prescrição de suplementos, requisição de exames, tabela ANVISA e gestão integrada de unidades/clínicas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

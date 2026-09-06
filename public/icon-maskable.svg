@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="mask-pwa-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C2B21" />
+      <stop offset="50%" stop-color="#2A6B46" />
+      <stop offset="100%" stop-color="#3C8D5E" />
+    </linearGradient>
+    <linearGradient id="mask-accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4E9F3D" />
+      <stop offset="100%" stop-color="#82CD47" />
+    </linearGradient>
+  </defs>
+
+  <!-- Full Bleed Square Canvas for Maskable Android cropping (no rounded borders on root) -->
+  <rect width="512" height="512" fill="url(#mask-pwa-grad)" />
+
+  <!-- Content scaled inside the 80% safe-zone circle (center 256, 256, radius 200) -->
+  <g transform="translate(51, 51) scale(0.80)">
+    <!-- Stylized Medical Cross with Smooth Organic Contours -->
+    <rect x="226" y="90" width="60" height="310" rx="30" fill="#FFFFFF" />
+    <rect x="100" y="226" width="312" height="60" rx="30" fill="#FFFFFF" />
+
+    <!-- Organic Nutrition Leaf overlay -->
+    <path d="M256 100 C 350 100, 400 180, 400 280 C 400 360, 330 400, 256 400 C 256 320, 320 270, 320 210 C 320 160, 280 130, 256 100 Z" fill="url(#mask-accent-grad)" fill-opacity="0.95" />
+    
+    <!-- Pulse Line / Metabolic Energy Indicator -->
+    <path d="M140 256 L 195 256 L 225 190 L 256 310 L 285 220 L 310 256 L 370 256" fill="none" stroke="#1C2B21" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Central Core Point -->
+    <circle cx="256" cy="256" r="16" fill="#4E9F3D" />
+  </g>
+</svg>
