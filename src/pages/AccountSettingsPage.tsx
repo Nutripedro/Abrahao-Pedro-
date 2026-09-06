@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AccessControlManager } from '../components/AccessControlManager';
 import {
   UserCircle,
   ShieldCheck,
@@ -707,6 +708,46 @@ export const AccountSettingsPage: React.FC = () => {
               </label>
             </div>
           </div>
+
+          {/* Card: Gerenciamento de Dados e Sincronização Offline */}
+          <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs space-y-4">
+            <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="w-8 h-8 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-100 dark:border-sky-900/60">
+                <RefreshCw className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                  Gerenciamento de Dados e Sincronização
+                </h3>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Status da Conexão:</span>
+                <span className={`text-xs font-bold px-2 py-1 rounded-full ${navigator.onLine ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                  {navigator.onLine ? 'Online' : 'Offline'}
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  className="w-full px-3 py-2.5 rounded-xl bg-sky-600 text-white text-xs font-bold cursor-pointer hover:bg-sky-700 transition-colors active:scale-95"
+                  onClick={async () => {
+                    const { syncService } = await import('../services/syncService');
+                    await syncService.syncPendingEvaluations();
+                    setFeedbackMessage('Sincronização iniciada...');
+                    setTimeout(() => setFeedbackMessage(null), 3000);
+                  }}
+                >
+                  Sincronizar Agora
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <AccessControlManager />
 
           {/* Card 3: Identidade Visual & Paletas Clínicas do Tema Claro */}
           <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-xs space-y-4">
